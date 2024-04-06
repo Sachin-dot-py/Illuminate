@@ -2,10 +2,10 @@ from flask import Flask
 
 app = Flask(__name__)
 
-@app.route('/api/get_something')
-def get_something():
+@app.route('/get_schedule')
+def get_schedule():
     return "Something"
 
-@app.route('/')
-def get_something1():
+@app.route('/get_profs')
+def get_profs():
     return "Something"
