@@ -3,7 +3,7 @@ from statistics import median
 from queue import PriorityQueue
 
 class Schedule:
-    def __init__(self):
+    def __init__(self, unavailabilities):
         self.schedule = {
             1: [],
             2: [],
@@ -13,6 +13,7 @@ class Schedule:
             6: [],
             7: []
         }
+        self.unavailabilities = unavailabilities
 
     def get_median_start_time(self):
         start_times = []
@@ -24,7 +25,7 @@ class Schedule:
     def get_median_end_time(self):
         end_times = []
         for day in self.schedule:
-            end_times.append(min([part['end'] for part in self.schedule[day]]))
+            end_times.append(max([part['end'] for part in self.schedule[day]]))
         end_times.sort()
         return median(end_times)
     
@@ -42,6 +43,10 @@ class Schedule:
                     # Is overlapping
                     if (part['start'] >= existing_class['start'] and part['start'] <= existing_class['end']) or (existing_class['start'] >= part['start'] and existing_class['start'] <= part['end']):
                         return True
+                for unavailability in self.unavailabilities[day]:
+                    # Is overlapping
+                    if (part['start'] >= unavailability[0] and part['start'] <= unavailability[1]) or (unavailability[0] >= part['start'] and unavailability[0] <= part['end']):
+                        return True
         return False
                 
     
@@ -55,13 +60,13 @@ class Schedule:
         return True
     
 
-def generate_schedules(classes, sort_by):
+def generate_schedules(classes, sort_by, unavailabilities):
 
     schedules = PriorityQueue()
 
     combinations = product(*classes.values())
     for combination in combinations:
-        schedule = Schedule()
+        schedule = Schedule(unavailabilities)
         for class_parts in combination:
             if not schedule.add_class(class_parts):
                 break
