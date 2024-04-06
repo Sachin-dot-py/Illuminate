@@ -1,8 +1,9 @@
 from itertools import product
 from statistics import median
+from queue import PriorityQueue
 
 class Schedule:
-    def __init__(self, sort_by):
+    def __init__(self):
         self.schedule = {
             1: [],
             2: [],
@@ -12,7 +13,6 @@ class Schedule:
             6: [],
             7: []
         }
-        self.sort_by = sort_by
 
     def get_median_start_time(self):
         start_times = []
@@ -57,16 +57,21 @@ class Schedule:
 
 def generate_schedules(classes, sort_by):
 
-    schedules = []
+    schedules = PriorityQueue()
 
     combinations = product(*classes.values())
     for combination in combinations:
-        schedule = Schedule(sort_by=sort_by)
+        schedule = Schedule()
         for class_parts in combination:
             if not schedule.add_class(class_parts):
                 break
         else:
-            schedules.append(schedule)
+            if sort_by == 'EARLIEST':
+                schedules.put((schedule.get_median_end_time(), schedule))
+            else:
+                schedules.put((schedule.get_median_start_time()*-1, schedule))
+    
+    return schedules
     
     
 
