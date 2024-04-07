@@ -66,7 +66,7 @@ export const formatStateForServer = (classes, timePreference, unavailabilities) 
 
     return {
         classes,
-        sortTImesBy: timePreference,
+        sortTimesBy: timePreference,
         unavailabilities: formattedUnavailabilities
     }
 }
