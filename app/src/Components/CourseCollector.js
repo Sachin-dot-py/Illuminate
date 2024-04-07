@@ -42,13 +42,14 @@ export const CourseCollector = ({courses, setCourses, setSelectedCourseForFilter
         <form onSubmit={onSubmit}>
             <input onChange={(e) => setCourseInput(e.target.value)} value={courseInput} name="courseInput" placeholder="Course Title + Enter"/>
         </form>
-        <ProfessorFilterer selectedCourseForFilter={selectedCourseForFilter} courses={courses} setCourses={setCourses} />
 
         <div className="courselist">
             {
                 Object.entries(courses).map(([courseName, profs], idx) => 
                 <Course courseName = {courseName} 
                         setCourses={setCourses}
+                        courses={courses}
+                        selectedCourseForFilter={selectedCourseForFilter}
                         onDelete={() => deleteCourse(courseName)}
                         setSelectedCourseForFilter = {setSelectedCourseForFilter}
                 />)
