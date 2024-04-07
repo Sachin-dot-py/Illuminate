@@ -11,9 +11,9 @@ def get_location_lat_lng(location_name, map_id, api_key):
     }
     response = requests.get(search_url, params=params)
     
-    print(f"Request URL: {response.request.url}")
-    print(f"Response Status Code: {response.status_code}")
-    print("Response Body:", response.json() if response.status_code == 200 else response.text)
+    #print(f"Request URL: {response.request.url}")
+    #print(f"Response Status Code: {response.status_code}")
+    #print("Response Body:", response.json() if response.status_code == 200 else response.text)
     if response.status_code == 200:
         data = response.json()
         if data["totalFound"] > 0:
@@ -39,19 +39,20 @@ def calculate_distance_and_time(from_lat, from_lng, to_lat, to_lng, map_id, api_
     }
     response = requests.get(wayfinding_url, params=params)
     # Debugging prints
-    print(f"Request URL: {response.request.url}")
-    print(f"Response Status Code: {response.status_code}")
-    print("Response Body:", response.json() if response.status_code == 200 else response.text)
+    #print(f"Request URL: {response.request.url}")
+    #print(f"Response Status Code: {response.status_code}")
+    #print("Response Body:", response.json() if response.status_code == 200 else response.text)
     if response.status_code == 200:
         data = response.json()
         return data["formattedDuration"], data["distance"]
     return None, None
 
 
-map_id = "1005"
+#example usage 
+'''map_id = "1005"
 api_key = "0001085cc708b9cef47080f064612ca5"
-from_location = "WLH"
-to_location = "PC"
+from_location = "WLH 2005"
+to_location = "RIMAC"
 
 
 from_lat, from_lng = get_location_lat_lng(from_location, map_id, api_key)
@@ -63,3 +64,4 @@ if None not in (from_lat, from_lng, to_lat, to_lng):
     print(f"Time: {time}, Distance: {distance} meters")
 else:
     print("Could not retrieve location information for one or both of the locations.")
+'''
