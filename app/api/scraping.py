@@ -72,6 +72,7 @@ class Scraper:
 
     def __init__(self, classes):
         self.params['courses'] = "\r\n".join(classes)
+        self.classes = classes
 
     @staticmethod
     def parse_times(string):
@@ -167,6 +168,8 @@ class Scraper:
                         else:
                             # Check if this professor is preferred by the user. If not, don't add this class.
                             if professor_prefs and new_class['professor'] not in professor_prefs.get(cur_dept + " " + cur_class, []):
+                                continue
+                            if not (cur_dept + " " + cur_class in self.classes):
                                 continue
                             # Add to class list with whatever class is here
                             if cur_dept + " " + cur_class in classes:
