@@ -81,13 +81,13 @@ function App() {
           UCSD couse auto-scheduler
         </h2>
         <p>
-          Input at least two courses to generate a schedule!
+          Input at least some courses to generate a schedule!
         </p>
       </section>
       <div className={"scheduleInfoContainer"}>
         <TimePreferenceSelector timePreference={timePreference} setTimePreference={setTimePreference} />
         <CourseCollector courses={courses} setCourses={setCourses}/>
-        <button onClick={() => fetchData()} disabled={courses.length < 2}>Generate Schedule</button>
+        <button onClick={() => fetchData()} disabled={courses.length < 1}>Generate Schedule</button>
       </div>
         <UnavailabilityCollector unavailabilities={unavailabilities} setUnavailabilities={setUnavailabilities}/>
       <CustomCalendar schedules={schedules}/>
