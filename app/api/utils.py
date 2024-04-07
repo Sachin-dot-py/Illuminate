@@ -29,12 +29,6 @@ class Schedule:
         end_times.sort()
         return median(end_times)
     
-    # def __le__(self, other):
-    #     if self.sort_by == "LATEST": # Starts latest
-    #         return self.get_median_start_time() >= other.get_median_start_time()
-    #     elif self.sort_by == "EARLIEST": # Ends earliest
-    #         return self.get_median_start_time() <= other.get_median_start_time()
-
     def check_conflict(self, class_parts):
         for part in class_parts:  # Lecture and Discussion(s)
             for day in part['day'].split(""):
