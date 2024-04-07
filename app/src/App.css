@@ -1,5 +1,17 @@
+
+
 .App {
   text-align: center;
+  min-height: 100vh; /* This makes sure your app covers the full height of the viewport */
+  margin: 0; /* Removes default margin */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center children vertically */
+  align-items: center; /* Center children horizontally */
+  background-size: cover; /* Cover the entire area of .App */
+  background-position: center; /* Center the background image */
+  background-repeat: no-repeat; /* Do not repeat the background image */
+  transition: background-image 0.5s ease-in-out; /* Smooth transition for background image changes */
 }
 
 .App-logo {
@@ -35,4 +47,44 @@
   to {
     transform: rotate(360deg);
   }
+}
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
+
+.content-box {
+  width: 100%;
+  max-width: 800px; /* Or whatever width you prefer */
+  margin-top: 2%; /* Adjust this to position the box in the top half or third of the page */
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  border-radius: 10px;
+  color: white; /* Text color */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: adds a subtle shadow */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* Spaces out the children */
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px; /* Larger text for the button */
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #0056b3;
 }
