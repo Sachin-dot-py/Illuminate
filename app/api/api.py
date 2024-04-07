@@ -35,10 +35,12 @@ def get_schedule():
         for day in schedule.schedule.values():
             if len(day) >= 2:
                 for i in range(len(day) - 1):
-                    from_lat, from_long = get_location_lat_lng(day[i]['location'].split(" ")[0])
-                    to_lat, to_long = get_location_lat_lng(day[i + 1]['location'].split(" ")[0])
-                    time_, distance = calculate_distance_and_time(from_lat, from_long, to_lat, to_long)
-                    day[i+1]['walkingTime'] = time_
+                    if int(day[i+1]['start']) <= int(day[i]['end']) + 20:
+                        from_lat, from_long = get_location_lat_lng(day[i]['location'].split(" ")[0])
+                        to_lat, to_long = get_location_lat_lng(day[i + 1]['location'].split(" ")[0])
+                        time_, distance = calculate_distance_and_time(from_lat, from_long, to_lat, to_long)
+                        day[i+1] = day[i+1].copy()
+                        day[i+1]['walkingTime'] = time_
 
     return json.dumps([schedule.schedule for schedule in top3])
 
