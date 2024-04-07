@@ -40,9 +40,19 @@ def get_schedule():
 
     return json.dumps([schedule.schedule for schedule in top3])
 
-@app.route('/get_profs')
+@app.route('/get_profs', methods=['POST'])
 def get_profs():
-    return "Something"
+    data = request.get_json()
+    selected_class = data.get('class')
+    scraper = Scraper([selected_class])
+    classes = scraper.get_classes()
+
+    professors = []
+    for part in classes[selected_class]:
+        if part[0]['professor'] not in professors:
+            professors.append(part[0]['professor'])
+        
+    return json.dumps(professors)
 
 if __name__ == "__main__":
     app.run()
