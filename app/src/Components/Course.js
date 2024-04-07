@@ -2,7 +2,7 @@ import "./Course.css"
 import { PROFESSOR_URL } from "../utils"
 import { useState, useEffect } from "react"
 
-export const Course = ({courseName, onDelete, setCourses}) => {
+export const Course = ({courseName, onDelete, setCourses, setSelectedCourseForFilter}) => {
 
     const [areProfessorsLoading, setAreProfessorsLoading] = useState(false)
     const [areProfessorsFetched, setAreProfessorsFetched] = useState(false)
@@ -44,6 +44,10 @@ export const Course = ({courseName, onDelete, setCourses}) => {
         return res
     }
 
+    const onClick = () => {
+        setSelectedCourseForFilter(courseName)
+    }
+
     useEffect(() => {
         console.log("Fetching Professors! Might need an if here")
         if(!areProfessorsFetched){
@@ -53,7 +57,7 @@ export const Course = ({courseName, onDelete, setCourses}) => {
     }, [])
 
     return <div className="course">
-        <p className="course-title"> {courseName} </p>
+        <p className="course-title" onClick={onClick}> {courseName} </p>
         <button onClick={onDelete}> X </button>
     </div>
 }
