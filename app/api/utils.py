@@ -1,7 +1,6 @@
 from itertools import product
-from statistics import median, mean
+from statistics import median
 from queue import PriorityQueue
-import time
 
 class Schedule:
     def __init__(self, unavailabilities):
@@ -64,16 +63,16 @@ def generate_schedules(classes, sort_by, unavailabilities):
     schedules = PriorityQueue()
 
     combinations = product(*classes.values())
-    for combination in combinations:
+    for i, combination in enumerate(combinations):
         schedule = Schedule(unavailabilities)
         for class_parts in combination:
             if not schedule.add_class(class_parts):
                 break
         else:
             if sort_by == 'EARLIEST':
-                schedules.put((schedule.get_median_end_time(), time.time(), schedule))
+                schedules.put((schedule.get_median_end_time(), i, schedule))
             else:
-                schedules.put((schedule.get_median_start_time()*-1, time.time(), schedule))
+                schedules.put((schedule.get_median_start_time()*-1, i, schedule))
     
     return schedules
     
