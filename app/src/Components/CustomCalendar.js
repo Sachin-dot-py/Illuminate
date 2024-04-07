@@ -25,7 +25,11 @@ export const CustomCalendar = ({schedules}) => {
 
     setCurrentScheduleIndex(currentScheduleIndex - 1)
   }
-
+  const CustomToolbar = () => (
+    <div className="customToolbar">
+      Your Schedule
+    </div>
+  );
   useEffect(() => {
     if(schedules.length > 0){
       setCurrentScheduleIndex(0)
@@ -55,7 +59,8 @@ export const CustomCalendar = ({schedules}) => {
         components={{
           work_week: {
             header: ({date, localizer}) => <p> {moment(date).format("dddd")} </p>,
-            toolbar: () => <div> Your Schedule </div>,
+            //toolbar: () => <div> Your Schedule </div>,
+            toolbar: CustomToolbar,
             // resourceHeader: () => <div>Hello there</div>
           }
         }}
