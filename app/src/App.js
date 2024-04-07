@@ -36,6 +36,7 @@ function App() {
   const [unavailabilities, setUnavailabilities] = useState(MOCK_UNAVAILABILITIES)
   const [schedules, setSchedules] = useState([])
   const [selectedCourseForFilter, setSelectedCourseForFilter] = useState(undefined)
+  const [scheduleCombinations, setScheduleCombinations] = useState(undefined)
 
   // Need a list of classes ["MATH 20E", "ECON 1", "VIS 9"]
   // Choose Earliest or latest (end early, start late)
@@ -64,7 +65,13 @@ function App() {
     }).then((res) => res.json())
     //return json.dumps({'numCombs': num_combs, 'schedules': [schedule.schedule for schedule in top3]})
     console.log(res)
+    // Set numCombinationsContainer to res['numCombs']
+    document.querySelector(".numCombinationsContainer").innerText = res['numCombs']
+    // Set visibility of text container to true
+    document.querySelector(".numCombinationsTextContainer").style.visibility = "visible"
+
     setSchedules(res['schedules'].map(parseSchedule))
+    setScheduleCombinations(res['numCombs'])
     console.log(schedules, "Network responded and parsed these events")
   }
 
@@ -97,11 +104,16 @@ function App() {
         </p>
       </section>
       <div className={"scheduleInfoContainer"}>
+
         <TimePreferenceSelector timePreference={timePreference} setTimePreference={setTimePreference} />
         <CourseCollector courses={courses} setCourses={setCourses} setSelectedCourseForFilter={setSelectedCourseForFilter} selectedCourseForFilter = {selectedCourseForFilter}/>
         <button onClick={() => fetchData()} disabled={courses.length < 2}>Generate Schedule</button>
       </div>
         <UnavailabilityCollector unavailabilities={unavailabilities} setUnavailabilities={setUnavailabilities}/>
+        <div className={"numCombinationsTextContainer"} style={{"visibility": "hidden"}}>
+          From <b><span className={"numCombinationsContainer"}>xxx</span></b> possible combinations, we picked these ones for you:
+        </div>
+        
       <CustomCalendar schedules={schedules}/>
     </div>
   );
