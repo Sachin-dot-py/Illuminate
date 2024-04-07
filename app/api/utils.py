@@ -90,7 +90,7 @@ def generate_schedules(classes, sort_by, unavailabilities):
             else:
                 schedules.put((schedule.get_median_start_time()*-1, schedule.get_min_start_time()*-1, i, schedule))
     
-    return schedules, len(combinations)
+    return schedules, len(list(combinations))
     
     
 
