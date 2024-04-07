@@ -1,7 +1,8 @@
 import { useState } from "react"
 import { Course } from "./Course"
+import { ProfessorFilterer } from "./ProfessorFilterer"
 
-export const CourseCollector = ({courses, setCourses, setSelectedCourseForFilter}) => {
+export const CourseCollector = ({courses, setCourses, setSelectedCourseForFilter, selectedCourseForFilter}) => {
     //COURSES IS A LIST
     const [courseInput, setCourseInput] = useState("")
 
@@ -41,6 +42,7 @@ export const CourseCollector = ({courses, setCourses, setSelectedCourseForFilter
         <form onSubmit={onSubmit}>
             <input onChange={(e) => setCourseInput(e.target.value)} value={courseInput} name="courseInput" placeholder="Course Title + Enter"/>
         </form>
+        <ProfessorFilterer selectedCourseForFilter={selectedCourseForFilter} courses={courses} setCourses={setCourses} />
 
         <div className="courselist">
             {

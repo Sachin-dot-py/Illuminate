@@ -62,7 +62,9 @@ function App() {
       },
       body: JSON.stringify(formatStateForServer(courses, timePreference, unavailabilities))
     }).then((res) => res.json())
-    setSchedules(res.map(parseSchedule))
+    //return json.dumps({'numCombs': num_combs, 'schedules': [schedule.schedule for schedule in top3]})
+    console.log(res)
+    setSchedules(res['schedules'].map(parseSchedule))
     console.log(schedules, "Network responded and parsed these events")
   }
 
@@ -96,11 +98,10 @@ function App() {
       </section>
       <div className={"scheduleInfoContainer"}>
         <TimePreferenceSelector timePreference={timePreference} setTimePreference={setTimePreference} />
-        <CourseCollector courses={courses} setCourses={setCourses} setSelectedCourseForFilter={setSelectedCourseForFilter}/>
+        <CourseCollector courses={courses} setCourses={setCourses} setSelectedCourseForFilter={setSelectedCourseForFilter} selectedCourseForFilter = {selectedCourseForFilter}/>
         <button onClick={() => fetchData()} disabled={courses.length < 2}>Generate Schedule</button>
       </div>
         <UnavailabilityCollector unavailabilities={unavailabilities} setUnavailabilities={setUnavailabilities}/>
-        <ProfessorFilterer selectedCourseForFilter={selectedCourseForFilter} courses={courses} setCourses={setCourses} />
       <CustomCalendar schedules={schedules}/>
     </div>
   );
