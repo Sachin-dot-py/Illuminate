@@ -10,7 +10,7 @@ export const TimePreferenceSelector = ({timePreference, setTimePreference}) => {
                                 checked = {timePreference == "EARLIEST"}
                                 onChange = {(e) => setTimePreference(e.target.value)}
                         />
-                EARLIER
+                Earlier
                 </label>
                 <label>
                         <input type='radio'
@@ -18,7 +18,7 @@ export const TimePreferenceSelector = ({timePreference, setTimePreference}) => {
                                 checked = {timePreference == "LATEST"}
                                 onChange = {(e) => setTimePreference(e.target.value)}
                         />
-                        LATER
+                        Later
                 </label>
         </div>
   </div>

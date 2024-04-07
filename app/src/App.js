@@ -13,10 +13,34 @@ import { MOCK_EVENTS } from './events'
 import moment from 'moment'
 import { CustomCalendar } from './Components/CustomCalendar';
 import { ProfessorFilterer } from './Components/ProfessorFilterer';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { MagnifyingGlass } from 'react-loader-spinner';
 //MONDAY = 1
 //TUESDAY = 2
+const Grid = ({ children, gap = 'none', columnGap = 0, rowGap = 0 }) => (
+  <div style={{
+    display: 'grid',
+    gap: gap !== 'none' ? gap : `${rowGap}px ${columnGap}px`,
+    gridTemplateColumns: 'repeat(12, 1fr)',
+  }}>
+    {children}
+  </div>
+);
 
+const Row = ({ children, css }) => (
+  <div style={{ gridColumn: '1 / -1', ...css }}>
+    {children}
+  </div>
+);
+
+const Column = ({ children, span = 1, start, end, css }) => {
+  let gridColumn = start && end ? `${start} / ${end}` : `span ${span}`;
+  return (
+    <div style={{ gridColumn, ...css }}>
+      {children}
+    </div>
+  );
+};
 
 function App() {
 
@@ -37,7 +61,11 @@ function App() {
   const [schedules, setSchedules] = useState([])
   const [selectedCourseForFilter, setSelectedCourseForFilter] = useState(undefined)
   const [scheduleCombinations, setScheduleCombinations] = useState(undefined)
-
+  const backgroundImages = [
+    'url("/images/1.jpg")',
+    'url("/images/2.jpg")',
+    'url("/images/3.jpg")'];
+  const [backgroundImageIndex, setBackgroundImageIndex] = useState(0);
   // Need a list of classes ["MATH 20E", "ECON 1", "VIS 9"]
   // Choose Earliest or latest (end early, start late)
   // Times not available - dont worry for now!
@@ -55,6 +83,7 @@ function App() {
   }
   
   const fetchData = async () => {
+    document.querySelector(".loadingAnimation").style.visibility = "visible";
     console.log(URL, "EEEE")
     const res = await fetch(URL, {
       method: "POST",
@@ -73,12 +102,21 @@ function App() {
     setSchedules(res['schedules'].map(parseSchedule))
     setScheduleCombinations(res['numCombs'])
     console.log(schedules, "Network responded and parsed these events")
+    document.querySelector(".loadingAnimation").style.visibility = "hidden";
   }
 
 
 
   useEffect(() => {
     // fetchData()
+    const intervalId = setInterval(() => {
+      setBackgroundImageIndex(prevIndex =>
+        prevIndex === backgroundImages.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 5000); // Rotates images every 5000 milliseconds (5 seconds)
+  
+    // This function will be called when the component unmounts
+    return () => clearInterval(intervalId);
   }, [])
 
   useEffect(() => {
@@ -91,29 +129,42 @@ function App() {
   console.log(moment().startOf('isoWeek'))
 
   return (
-    <div className="App">
-      <p> {JSON.stringify(courses)} </p>
-      <p> {`Selected course ${selectedCourseForFilter}`}</p>
-
+    <div className="App" style={{ 
+      backgroundImage: 'url("/images/2.jpg")', // Directly setting image 2 as the background
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      minHeight: '100vh'
+    }}>
+      
       <section>
-        <h2>
-          UCSD couse auto-scheduler
+        <h2 style={{ backgroundColor: '#4CAF50', color: 'white', padding: '10px', borderRadius: '5px' }}>
+          Illuminate: UCSD Course Auto-Scheduler
         </h2>
-        <p>
-          Input at least some courses to generate a schedule!
-        </p>
       </section>
       <div className={"scheduleInfoContainer"}>
-
         <TimePreferenceSelector timePreference={timePreference} setTimePreference={setTimePreference} />
-        <CourseCollector courses={courses} setCourses={setCourses} setSelectedCourseForFilter={setSelectedCourseForFilter} selectedCourseForFilter = {selectedCourseForFilter}/>
+        <CourseCollector courses={courses} setCourses={setCourses} setSelectedCourseForFilter={setSelectedCourseForFilter} selectedCourseForFilter={selectedCourseForFilter}/>
         <button onClick={() => fetchData()} disabled={courses.length < 2}>Generate Schedule</button>
+        <div className={"loadingAnimation"} style={{"visibility": "hidden"}}>
+          <MagnifyingGlass
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="magnifying-glass-loading"
+            wrapperStyle={{}}
+            wrapperClass="magnifying-glass-wrapper"
+            glassColor="#c0efff"
+            color="#e15b64"
+          />
       </div>
-        <UnavailabilityCollector unavailabilities={unavailabilities} setUnavailabilities={setUnavailabilities}/>
-        <div className={"numCombinationsTextContainer"} style={{"visibility": "hidden"}}>
-          From <b><span className={"numCombinationsContainer"}>xxx</span></b> possible combinations, we picked these ones for you:<br/>Tip: Hover over a class to view CAPEs data for that professor!
-        </div>
-        
+      </div>
+      <UnavailabilityCollector unavailabilities={unavailabilities} setUnavailabilities={setUnavailabilities}/>
+      <div className={"numCombinationsTextContainer"} style={{ visibility: "hidden", color: "black", fontSize: "20px" }}>
+  From <b><span className={"numCombinationsContainer"}>xxx</span></b> possible combinations, we picked these ones for you:<br/>Tip: Hover over a class to view CAPEs data for that professor!
+</div>
+
+      
       <CustomCalendar schedules={schedules}/>
     </div>
   );
