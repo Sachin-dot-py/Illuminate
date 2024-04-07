@@ -8,9 +8,10 @@ import TimeRange from "react-time-range"
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { UnavailabilityCollector } from './Components/UnavailabilityCollector';
 import { formatStateForServer, parseTimestamp, timestampToMilitary } from './utils';
-import { Calendar, momentLocalizer } from 'react-big-calendar';
+import { Calendar, Views, momentLocalizer } from 'react-big-calendar';
 import { MOCK_EVENTS } from './events'
 import moment from 'moment'
+import "./CustomCalendar.css"
 
 //MONDAY = 1
 //TUESDAY = 2
@@ -68,14 +69,33 @@ function App() {
     // fetchData()
   }, [])
 
-
+  console.log(new Date())
+  console.log(moment().startOf('isoWeek'))
 
   return (
     <div className="App">
       <TimePreferenceSelector timePreference={timePreference} setTimePreference={setTimePreference} />
       <CourseCollector courses={courses} setCourses={setCourses}/>
       <UnavailabilityCollector unavailabilities={unavailabilities} setUnavailabilities={setUnavailabilities}/>
-      <Calendar localizer={localizer} events={MOCK_EVENTS} startAccessor={"start"} endAccessor={"end"} style={{height: 500}}/>
+      <Calendar 
+      localizer={localizer} 
+      events={MOCK_EVENTS} 
+      startAccessor={"start"} 
+      endAccessor={"end"} 
+      style={{height: 700, width: "100%"}}
+      defaultView={'work_week'}
+      views={["work_week"]}
+      min={new Date(2020, 1, 0, 7, 0, 0)} 
+      max={new Date(2020, 1, 0, 20, 0, 0)}
+      allDayMaxRows={0}
+      components={{
+        work_week: {
+          header: ({date, localizer}) => <p> {moment(date).format("dddd")} </p>,
+          toolbar: () => <div> Your Schedule </div>,
+          // resourceHeader: () => <div>Hello there</div>
+        }
+      }}
+      />
       <button onClick={() => fetchData()}>Foo</button>
     </div>
   );
