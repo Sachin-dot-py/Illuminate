@@ -1,7 +1,11 @@
 .course {
     display: flex;
+    margin: 0 auto;
+    padding: 0 10px;
     align-items: center;
     justify-content: center;
+    width: 70%;
+    border-radius: 10px;
 }
 
 .course-title {

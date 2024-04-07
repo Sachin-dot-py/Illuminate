@@ -111,7 +111,7 @@ export const parseScheduleUnit = (isoDay, scheduleUnit) => {
     const [startTime, endTime] = getClassEventStartAndEnd(isoDay, scheduleUnit)
     const {code, location, section, type, professor} = scheduleUnit
 
-    const title = `${code}\n${professor}\n ${type}|${section}\n${location}`
+    const title = `${code}\n${professor}\n ${type} | ${section}\n${location}`
 
     return {
         id: Math.random() * 100,

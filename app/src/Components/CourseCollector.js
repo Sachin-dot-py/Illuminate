@@ -22,20 +22,22 @@ export const CourseCollector = ({courses, setCourses}) => {
         clearCourseInput()
     }
 
-    return <>
-        <p> Course Input </p>
+    return <div className="courseCollectorContainer">
+        <p> Input desired courses one by one. </p>
         
         <form onSubmit={onSubmit}>
-            <input onChange={(e) => setCourseInput(e.target.value)} value={courseInput} name="courseInput"/>
+            <input onChange={(e) => setCourseInput(e.target.value)} value={courseInput} name="courseInput" placeholder="Course Title + Enter"/>
         </form>
 
-        {
-            courses.map((courseName, idx) => 
-            <Course courseName = {courseName} 
-                    onDelete={() => setCourses((cl) => cl.filter((_, currIdx) => currIdx !== idx))}
-            
-            />)
-        }
-    </>
+        <div className="courselist">
+            {
+                courses.map((courseName, idx) => 
+                <Course courseName = {courseName} 
+                        onDelete={() => setCourses((cl) => cl.filter((_, currIdx) => currIdx !== idx))}
+                
+                />)
+            }
+        </div>
+    </div>
 
 }
