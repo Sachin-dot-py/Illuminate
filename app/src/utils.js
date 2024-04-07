@@ -1,3 +1,6 @@
+import moment from "moment"
+
+
 //Thank you ChatGPT :)
 export const timestampToMilitary = (ts) => {
     // Create a Date object from the timestamp
@@ -71,4 +74,58 @@ export const formatStateForServer = (classes, timePreference, unavailabilities) 
         sortTimesBy: timePreference,
         unavailabilities: formattedUnavailabilities
     }
+}
+
+function getClassEventStartAndEnd(isoDay, classInfo) {
+    // Get the start of the current ISO week and add the ISO day offset
+    const classStartDate = moment().startOf('isoWeek').add(isoDay - 1, 'days').add(1, "week");
+    const classEndDate = moment().startOf('isoWeek').add(isoDay - 1 , 'days').add(1, "week")
+    // Adjust the start time format to ensure it's always HHMM
+    let startTime = classInfo.start;
+    if (startTime.length === 3) {
+        startTime = '0' + startTime; // Prefix with 0 if the start time is in HMM format
+    }
+
+    let endTime = classInfo.end
+    if (endTime.length === 3) {
+        endTime = '0' + startTime; // Prefix with 0 if the start time is in HMM format
+    }
+
+    // Extract hours and minutes from the start time
+    const startTimeHours = parseInt(startTime.substring(0, 2), 10);
+    const startTimeMinutes = parseInt(startTime.substring(2, 4), 10);
+
+    const endTimeHours = parseInt(endTime.substring(0,2), 10)
+    const endTimeMinutes = parseInt(endTime.substring(2,4), 10)
+
+    // Set the time for the class start
+    classStartDate.hours(startTimeHours).minutes(startTimeMinutes);
+    classEndDate.hours(endTimeHours).minutes(endTimeMinutes)
+
+    return [classStartDate.toDate(), classEndDate.toDate()];
+}
+
+//schedule CSE 12, start, end
+export const parseScheduleUnit = (isoDay, scheduleUnit) => {
+
+    const [startTime, endTime] = getClassEventStartAndEnd(isoDay, scheduleUnit)
+
+    return {
+        id: Math.random() * 100,
+        title: scheduleUnit.code,
+        start: startTime,
+        end: endTime,
+    }
+}
+
+export const parseSchedule = (schedule) => {
+    return Object
+        .entries(schedule)
+        .reduce((parsedSchedule, [isoDay, classArray]) => {
+            classArray.forEach((classInfo) => {
+                parsedSchedule.push(parseScheduleUnit(isoDay, classInfo))
+            })
+
+            return parsedSchedule
+        }, [])
 }
