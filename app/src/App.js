@@ -139,11 +139,8 @@ function App() {
       
       <section>
         <h2 style={{ backgroundColor: '#4CAF50', color: 'white', padding: '10px', borderRadius: '5px' }}>
-          UCSD Course Auto-Scheduler
+          Illuminate: UCSD Course Auto-Scheduler
         </h2>
-        <p style={{ color: 'white', fontSize: '18px' }}>
-          Input at least two courses to generate a schedule!
-        </p>
       </section>
       <div className={"scheduleInfoContainer"}>
         <TimePreferenceSelector timePreference={timePreference} setTimePreference={setTimePreference} />
