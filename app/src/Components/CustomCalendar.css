@@ -1,0 +1,25 @@
+/* .rbc-button-group {
+    visibility: hidden;
+    border: 10px solid red;
+} */
+
+.rbc-allday-cell {
+    display: none
+}
+
+.rbc-row-bg {
+    display: none
+}
+
+.schedulescroller {
+    /* background: #000;
+     */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px;
+}
+
+.scrollerstatus {
+    margin: 0 10px;
+}

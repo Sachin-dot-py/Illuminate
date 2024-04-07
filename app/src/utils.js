@@ -109,10 +109,13 @@ function getClassEventStartAndEnd(isoDay, classInfo) {
 export const parseScheduleUnit = (isoDay, scheduleUnit) => {
 
     const [startTime, endTime] = getClassEventStartAndEnd(isoDay, scheduleUnit)
+    const {code, location, section, type, professor} = scheduleUnit
+
+    const title = `${code}\n${professor}\n ${type}|${section}\n${location}`
 
     return {
         id: Math.random() * 100,
-        title: scheduleUnit.code,
+        title: title,
         start: startTime,
         end: endTime,
     }

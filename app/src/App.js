@@ -11,7 +11,7 @@ import { formatStateForServer, parseSchedule} from './utils';
 import { Calendar, Views, momentLocalizer } from 'react-big-calendar';
 import { MOCK_EVENTS } from './events'
 import moment from 'moment'
-import "./CustomCalendar.css"
+import { CustomCalendar } from './Components/CustomCalendar';
 
 //MONDAY = 1
 //TUESDAY = 2
@@ -33,7 +33,7 @@ function App() {
   const [courses, setCourses] = useState([])
   const [timePreference, setTimePreference] = useState("LATEST")
   const [unavailabilities, setUnavailabilities] = useState(MOCK_UNAVAILABILITIES)
-  const [events, setEvents] = useState([])
+  const [schedules, setSchedules] = useState([])
 
   // Need a list of classes ["MATH 20E", "ECON 1", "VIS 9"]
   // Choose Earliest or latest (end early, start late)
@@ -60,8 +60,8 @@ function App() {
       },
       body: JSON.stringify(formatStateForServer(courses, timePreference, unavailabilities))
     }).then((res) => res.json())
-    setEvents(parseSchedule(res[0]))
-    console.log(events, "Network responded and parsed these events")
+    setSchedules(res.map(parseSchedule))
+    console.log(schedules, "Network responded and parsed these events")
   }
 
 
@@ -76,29 +76,11 @@ function App() {
 
   return (
     <div className="App">
-      <p> {JSON.stringify(events)} </p>
+      <p> {JSON.stringify(schedules)} </p>
       <TimePreferenceSelector timePreference={timePreference} setTimePreference={setTimePreference} />
       <CourseCollector courses={courses} setCourses={setCourses}/>
       <UnavailabilityCollector unavailabilities={unavailabilities} setUnavailabilities={setUnavailabilities}/>
-      <Calendar 
-      localizer={localizer} 
-      events={events} 
-      startAccessor={"start"} 
-      endAccessor={"end"} 
-      style={{height: 700, width: "100%"}}
-      defaultView={'work_week'}
-      views={["work_week"]}
-      min={new Date(2020, 1, 0, 7, 0, 0)} 
-      max={new Date(2020, 1, 0, 20, 0, 0)}
-      allDayMaxRows={0}
-      components={{
-        work_week: {
-          // header: ({date, localizer}) => <p> {moment(date).format("dddd")} </p>,
-          // toolbar: () => <div> Your Schedule </div>,
-          // resourceHeader: () => <div>Hello there</div>
-        }
-      }}
-      />
+      <CustomCalendar schedules={schedules}/>
       <button onClick={() => fetchData()}>Foo</button>
     </div>
   );
