@@ -107,8 +107,12 @@ class Scraper:
     def get_classes(self, professor_prefs=None):
         responsetext = self.make_request(page=1)
         soup = BeautifulSoup(responsetext, 'html.parser')
-        pagetext = soup.find_all("table")[2].find("td", {"align": "right"}).text.encode('ascii', 'ignore').decode('ascii').strip()
-        numpages = int(re.search(r'1of(\d+)', pagetext).group(1))
+        try:
+            pagetext = soup.find_all("table")[2].find("td", {"align": "right"}).text.encode('ascii', 'ignore').decode('ascii').strip()
+            numpages = int(re.search(r'1of(\d+)', pagetext).group(1))
+        except:
+            print("Error parsing number of pages")
+            numpages = 1
         tables = [soup.find("table", {"class": "tbrdr"})]
         if numpages > 1:
             for i in range(2, numpages + 1):
