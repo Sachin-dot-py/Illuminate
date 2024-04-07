@@ -29,32 +29,35 @@ export const UnavailabilityCollector = ({unavailabilities, setUnavailabilities})
         })
     }
 
-    return <div>
+    return <div className="unavailabilityCollectorContainer">
 
-        <select value={currentDay} onChange={(e) => setCurrentDay(e.target.value)}>
-            {DAYS.map((day) => {
-                return <option key={day} value={day}> {day} </option>
-            })}
-        </select>
-        
-        <button onClick={() => addUnavailabilityToDay(currentDay)}> Add 2Unavailability </button>
+        <div className="unavailabilitySelectorsContainer">
+            <select value={currentDay} onChange={(e) => setCurrentDay(e.target.value)}>
+                {DAYS.map((day) => {
+                    return <option key={day} value={day}> {day} </option>
+                })}
+            </select>
+            <button onClick={() => addUnavailabilityToDay(currentDay)}> Add Unavailability </button>
+        </div>
+        <p>{`You are unavailable at these times on ${currentDay}`}</p>
+        <div className={"unavailabilitiesList"}>
+            {unavailabilities[currentDay].length ? unavailabilities[currentDay].map(([startTime, endTime], idx) => {
+                // console.log("Rendering timerange with", startTime, endTime, "on day", currentDay, "in index", idx)
+                const onChange = ({startTime, endTime}) => {editTimeRange(currentDay, startTime, endTime, idx)}
 
-        {unavailabilities[currentDay].map(([startTime, endTime], idx) => {
-            // console.log("Rendering timerange with", startTime, endTime, "on day", currentDay, "in index", idx)
-            const onChange = ({startTime, endTime}) => {editTimeRange(currentDay, startTime, endTime, idx)}
+                const deleteUnavailability = () => {
+                    setUnavailabilities((oldUnavailabilities) => {
+                        let newUnavailabilities = {...oldUnavailabilities}
 
-            const deleteUnavailability = () => {
-                setUnavailabilities((oldUnavailabilities) => {
-                    let newUnavailabilities = {...oldUnavailabilities}
+                        newUnavailabilities[currentDay] = newUnavailabilities[currentDay].filter((_, currIdx) => currIdx !== idx)
 
-                    newUnavailabilities[currentDay] = newUnavailabilities[currentDay].filter((_, currIdx) => currIdx !== idx)
+                        return newUnavailabilities
+                    })
+                }
 
-                    return newUnavailabilities
-                })
-            }
-
-            // return <TimeRange use24Hours={true} startMoment={startTime} endMoment={endTime} onChange = {onChange}/>
-            return <Unavailability startTime={startTime} endTime={endTime} onChange={onChange} onDelete={deleteUnavailability} />
-        })}
+                // return <TimeRange use24Hours={true} startMoment={startTime} endMoment={endTime} onChange = {onChange}/>
+                return <Unavailability startTime={startTime} endTime={endTime} onChange={onChange} onDelete={deleteUnavailability} />
+            }) : <p className={"noUnavailabilitiesText"}> {`You have no unavailabilities set for ${currentDay}`} </p>}
+        </div>
     </div>
 }
