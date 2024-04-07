@@ -118,19 +118,44 @@ function getClassEventStartAndEnd(isoDay, classInfo) {
     return [classStartDate.toDate(), classEndDate.toDate()];
 }
 
+let classColorMapping = {};
+
 //schedule CSE 12, start, end
 export const parseScheduleUnit = (isoDay, scheduleUnit) => {
 
     const [startTime, endTime] = getClassEventStartAndEnd(isoDay, scheduleUnit)
-    const {code, location, section, type, professor, walkingTime, percentClass, studyHours, percentProf} = scheduleUnit
+    const {code, location, section, type, professor, walkingTime, percentClass, studyHours, percentProf, avgGrade} = scheduleUnit
 
-    const title = `${code}\n${professor}\n ${type} | ${section}\n ${location}\n${walkingTime ?? "N/A"}🚶`
+    // const title = `${code}\n${professor}\n ${type} | ${section}\n ${location}\n${walkingTime ?? "N/A"}🚶`
+    let title_text = ``
+    if (percentClass == undefined) {
+        title_text = `\nNo CAPEs data for this class and professor.`
+    }
+    else {
+        title_text = `\n📚Percentage Recommended Class: ${percentClass}\n👍Percentage Recommended Professor: ${percentProf}\n🕒Study Hours per Week: ${studyHours}\n🎓Average Grade Received: ${avgGrade}`
+    }
+    const title = title_text
+
+    const colors = ["#bde0fe", "#ffc8dd", "#a2d2ff", "#ffafcc", "#cdb4db", "#e9edc9"];
+
+    let color_id = 0;
+
+    if (Object.keys(classColorMapping).length === 0){
+        color_id = 0;
+        classColorMapping[code] = color_id;
+    } else if (classColorMapping[code]){
+        color_id = classColorMapping[code];
+    } else {
+        color_id = Math.max(...Object.values(classColorMapping)) + 1;
+        classColorMapping[code] = color_id;
+    }
 
     return {
         id: Math.random() * 100,
         title: title,
         start: startTime,
         end: endTime,
+        color: colors[color_id],
         code,
         professor,
         type,
