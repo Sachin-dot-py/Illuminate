@@ -46,7 +46,7 @@ export const CustomCalendar = ({schedules}) => {
         events={currentScheduleIndex === -1 ? [] : schedules[currentScheduleIndex]} 
         startAccessor={"start"} 
         endAccessor={"end"} 
-        style={{height: 700, width: "100%"}}
+        style={{height: 1200, width: "100%"}}
         defaultView={'work_week'}
         views={["work_week"]}
         min={new Date(2020, 1, 0, 7, 0, 0)} 
