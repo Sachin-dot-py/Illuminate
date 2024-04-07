@@ -125,7 +125,7 @@ class Scraper:
         class_parts = []
         for table in tables:
             for row in table.find_all("tr"):
-                if "Cancelled" in row.text:
+                if "Cancelled" in row.text or "TBA" in row.text:
                     continue
                 h2 = row.find("h2")
                 tds = row.find_all("td", {"class": "crsheader"})
