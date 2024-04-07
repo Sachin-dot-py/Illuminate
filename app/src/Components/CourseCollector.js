@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Course } from "./Course"
 
-export const CourseCollector = ({courses, setCourses}) => {
+export const CourseCollector = ({courses, setCourses, setSelectedCourseForFilter}) => {
     //COURSES IS A LIST
     const [courseInput, setCourseInput] = useState("")
 
@@ -11,7 +11,7 @@ export const CourseCollector = ({courses, setCourses}) => {
         
         // TODO VERIFY COURSE EXISTS
         // console.log()
-        setCourses((old) => [...old, courseName])
+        setCourses((old) => ({...old, [courseName]: {}}))
     }
 
     const onSubmit = (e) => {
@@ -22,6 +22,19 @@ export const CourseCollector = ({courses, setCourses}) => {
         clearCourseInput()
     }
 
+    const deleteCourse = (course) => {
+        setCourses((oldCourses) => {
+            let newCourses = {...oldCourses}
+
+            delete newCourses[course]
+
+            return newCourses
+        })
+
+    }
+
+
+
     return <div className="courseCollectorContainer">
         <p> Input desired courses one by one. </p>
         
@@ -31,10 +44,11 @@ export const CourseCollector = ({courses, setCourses}) => {
 
         <div className="courselist">
             {
-                courses.map((courseName, idx) => 
+                Object.entries(courses).map(([courseName, profs], idx) => 
                 <Course courseName = {courseName} 
-                        onDelete={() => setCourses((cl) => cl.filter((_, currIdx) => currIdx !== idx))}
-                
+                        setCourses={setCourses}
+                        onDelete={() => deleteCourse(courseName)}
+                        setSelectedCourseForFilter = {setSelectedCourseForFilter}
                 />)
             }
         </div>
