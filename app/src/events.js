@@ -1,4 +1,4 @@
-export const events = [{
+export const MOCK_EVENTS = [{
     id: 1,
     title: 'Long Event',
     start: new Date(2015, 3, 7),
@@ -124,8 +124,8 @@ export const events = [{
   {
     id: 15,
     title: 'Point in Time Event',
-    start: now,
-    end: now,
+    start: new Date(),
+    end: new Date(),
   },
   {
     id: 16,

@@ -5,8 +5,13 @@ import { Course } from './Components/Course';
 import { CourseCollector } from './Components/CourseCollector';
 import { TimePreferenceSelector } from './Components/TimePreferenceSelector';
 import TimeRange from "react-time-range"
+import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { UnavailabilityCollector } from './Components/UnavailabilityCollector';
-import { formatStateForServer, parseTimestamp, timestampToMilitary } from './utils';
+import { formatStateForServer, parseSchedule} from './utils';
+import { Calendar, Views, momentLocalizer } from 'react-big-calendar';
+import { MOCK_EVENTS } from './events'
+import moment from 'moment'
+import { CustomCalendar } from './Components/CustomCalendar';
 
 //MONDAY = 1
 //TUESDAY = 2
@@ -14,6 +19,7 @@ import { formatStateForServer, parseTimestamp, timestampToMilitary } from './uti
 
 function App() {
 
+  const localizer = momentLocalizer(moment)
   const MOCK_UNAVAILABILITIES = {
     "MONDAY" : [],
     "TUESDAY" : [],
@@ -27,6 +33,7 @@ function App() {
   const [courses, setCourses] = useState([])
   const [timePreference, setTimePreference] = useState("LATEST")
   const [unavailabilities, setUnavailabilities] = useState(MOCK_UNAVAILABILITIES)
+  const [schedules, setSchedules] = useState([])
 
   // Need a list of classes ["MATH 20E", "ECON 1", "VIS 9"]
   // Choose Earliest or latest (end early, start late)
@@ -53,7 +60,8 @@ function App() {
       },
       body: JSON.stringify(formatStateForServer(courses, timePreference, unavailabilities))
     }).then((res) => res.json())
-    console.log(res)
+    setSchedules(res.map(parseSchedule))
+    console.log(schedules, "Network responded and parsed these events")
   }
 
 
@@ -63,13 +71,16 @@ function App() {
     // fetchData()
   }, [])
 
-
+  console.log(new Date())
+  console.log(moment().startOf('isoWeek'))
 
   return (
     <div className="App">
+      <p> {JSON.stringify(schedules)} </p>
       <TimePreferenceSelector timePreference={timePreference} setTimePreference={setTimePreference} />
       <CourseCollector courses={courses} setCourses={setCourses}/>
       <UnavailabilityCollector unavailabilities={unavailabilities} setUnavailabilities={setUnavailabilities}/>
+      <CustomCalendar schedules={schedules}/>
       <button onClick={() => fetchData()}>Foo</button>
     </div>
   );
