@@ -67,3 +67,6 @@
     text-align: center;
     margin-top: 10px; /* Adjust as needed for spacing */
   }
+.walking-warning {
+    color: #780000;
+}
