@@ -11,7 +11,7 @@ export const CourseCollector = ({courses, setCourses}) => {
         
         // TODO VERIFY COURSE EXISTS
         // console.log()
-        setCourses((old) => [...old, courseName])
+        setCourses((old) => ({...old, [courseName]: {}}))
     }
 
     const onSubmit = (e) => {
@@ -31,8 +31,9 @@ export const CourseCollector = ({courses, setCourses}) => {
 
         <div className="courselist">
             {
-                courses.map((courseName, idx) => 
+                Object.entries(courses).map(([courseName, profs], idx) => 
                 <Course courseName = {courseName} 
+                        setCourses={setCourses}
                         onDelete={() => setCourses((cl) => cl.filter((_, currIdx) => currIdx !== idx))}
                 
                 />)

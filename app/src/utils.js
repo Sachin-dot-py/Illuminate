@@ -132,3 +132,5 @@ export const parseSchedule = (schedule) => {
             return parsedSchedule
         }, [])
 }
+
+export const PROFESSOR_URL = "http://localhost:3000/api/get_profs"
