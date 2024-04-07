@@ -76,12 +76,21 @@ function App() {
 
   return (
     <div className="App">
-      <p> {JSON.stringify(schedules)} </p>
-      <TimePreferenceSelector timePreference={timePreference} setTimePreference={setTimePreference} />
-      <CourseCollector courses={courses} setCourses={setCourses}/>
-      <UnavailabilityCollector unavailabilities={unavailabilities} setUnavailabilities={setUnavailabilities}/>
+      <section>
+        <h2>
+          UCSD couse auto-scheduler
+        </h2>
+        <p>
+          Input at least two courses to generate a schedule!
+        </p>
+      </section>
+      <div className={"scheduleInfoContainer"}>
+        <TimePreferenceSelector timePreference={timePreference} setTimePreference={setTimePreference} />
+        <CourseCollector courses={courses} setCourses={setCourses}/>
+        <button onClick={() => fetchData()} disabled={courses.length < 2}>Generate Schedule</button>
+      </div>
+        <UnavailabilityCollector unavailabilities={unavailabilities} setUnavailabilities={setUnavailabilities}/>
       <CustomCalendar schedules={schedules}/>
-      <button onClick={() => fetchData()}>Foo</button>
     </div>
   );
 }
