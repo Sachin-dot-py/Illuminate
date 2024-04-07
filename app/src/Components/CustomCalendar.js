@@ -55,7 +55,7 @@ export const CustomCalendar = ({schedules}) => {
         components={{
           work_week: {
             header: ({date, localizer}) => <p> {moment(date).format("dddd")} </p>,
-            toolbar: () => <div> Your Schedule </div>,
+            toolbar: () => <div> {`Your Schedule(s)`} </div>,
             // resourceHeader: () => <div>Hello there</div>
           }
         }}
