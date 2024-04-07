@@ -1,38 +1,69 @@
-/* .rbc-button-group {
+/* Uncomment if you need to hide the button group, and remove the border unless it's for debugging purposes
+.rbc-button-group {
     visibility: hidden;
     border: 10px solid red;
-} */
-
-.rbc-allday-cell {
-    display: none
 }
+*/
+.rbc-time-header-gutter{
+    background-color: rgba(255, 255, 255, 0.8);
+
+}
+.rbc-header {
+   
+    background-color: rgba(255, 255, 255, 0.8);
+}
+.rbc-allday-cell {
+    display: none;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
 
 .rbc-row-bg {
-    display: none
+   
+    background-color: rgba(255, 255, 255, 0.8);
 }
 
+
 .schedulescroller {
-    /* background: #000;
-     */
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 10px;
+    
+    background-color: rgba(255, 255, 255, 0.8);
 }
+
 
 .scrollerstatus {
     margin: 0 10px;
 }
 
+
 .rbc-timeslot-group {
     height: 300px !important;
 }
 
-.event-txt {
-    font-size: 10px;
-    margin: 0px;
+
+.rbc-time-content {
+    
+    background-color: rgba(255, 255, 255, 0.8);
 }
 
-.walking-warning {
-    color: pink
+.rbc-day-slot .rbc-time-slot {
+    
+    background-color: rgba(255, 255, 255, 0.8);
 }
+
+
+.rbc-event {
+    background-color: #3174ad; 
+    border-color: #265985; 
+    color: white; 
+}
+
+.customToolbar {
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    margin-top: 10px; /* Adjust as needed for spacing */
+  }
