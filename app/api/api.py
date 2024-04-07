@@ -22,7 +22,7 @@ def get_schedule():
     classes = scraper.get_classes()
 
     # Generate the schedules
-    schedules = generate_schedules(classes, sort_by, unavailability)
+    schedules, num_combs = generate_schedules(classes, sort_by, unavailability)
     # Might be less than 3 schedules
     top3 = [schedules.get()[-1] for _ in range(3) if not schedules.empty()]
 
@@ -42,7 +42,7 @@ def get_schedule():
                         day[i+1] = day[i+1].copy()
                         day[i+1]['walkingTime'] = time_
 
-    return json.dumps([schedule.schedule for schedule in top3])
+    return json.dumps({'numCombs': num_combs, 'schedules': [schedule.schedule for schedule in top3]})
 
 @app.route('/get_profs', methods=['POST'])
 def get_profs():
