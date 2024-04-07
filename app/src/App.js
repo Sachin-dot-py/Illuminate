@@ -6,7 +6,7 @@ import { CourseCollector } from './Components/CourseCollector';
 import { TimePreferenceSelector } from './Components/TimePreferenceSelector';
 import TimeRange from "react-time-range"
 import { UnavailabilityCollector } from './Components/UnavailabilityCollector';
-import { parseTimestamp, timestampToMilitary } from './utils';
+import { formatStateForServer, parseTimestamp, timestampToMilitary } from './utils';
 
 //MONDAY = 1
 //TUESDAY = 2
@@ -40,12 +40,9 @@ function App() {
     }
   }
 
-  unavailabilities["MONDAY"].forEach(([startTs, endTs], idx) => {
-      const militaryStartTime = parseTimestamp(startTs)
-      const militaryEndTime = parseTimestamp(endTs)
-
-      console.log(militaryStartTime)
-  })
+  const onSendRequest = () => {
+    console.log(formatStateForServer(courses,timePreference,unavailabilities))
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -65,6 +62,7 @@ function App() {
       <CourseCollector courses={courses} setCourses={setCourses}/>
       {/* <TimeRange use24Hours={true} startMoment={startMoment} endMoment={endMoment} onChange={handleChange}/> */}
       <UnavailabilityCollector unavailabilities={unavailabilities} setUnavailabilities={setUnavailabilities}/>
+      <button onClick={onSendRequest}>Foo</button>
     </div>
   );
 }

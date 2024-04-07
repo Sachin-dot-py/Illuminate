@@ -35,8 +35,20 @@ const EXAMPLE = {
     }
   }
 
+const DAY_MAPPING = {
+    "MONDAY" : 1,
+    "TUESDAY" : 2,
+    "WEDNESDAY" : 3,
+    "THURSDAY" : 4,
+    "FRIDAY" : 5
+}
+
+
 export const formatStateForServer = (classes, timePreference, unavailabilities) => {
 
+    const formattedUnavailabilities = {}
+
+    //Turn each of the timestamps into the right military time
     DAYS.forEach((day) => {
         unavailabilities[day] = unavailabilities[day].map(([startTime, endTime]) => {
             const newStartTime = parseTimestamp(startTime)
@@ -46,11 +58,15 @@ export const formatStateForServer = (classes, timePreference, unavailabilities) 
         })
     })
 
-
+    //Switch the keys to 1,2,3,4,5 for the days of the week.
+    for(let [key,value] of Object.entries(unavailabilities)){
+        let newKey = DAY_MAPPING[key]
+        formattedUnavailabilities[newKey] = value
+    }
 
     return {
         classes,
         sortTImesBy: timePreference,
-        unavailabilities
+        unavailabilities: formattedUnavailabilities
     }
 }
