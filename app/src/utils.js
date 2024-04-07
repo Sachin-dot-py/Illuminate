@@ -46,6 +46,19 @@ const DAY_MAPPING = {
     "FRIDAY" : 5
 }
 
+const formatClassesForServer = (classes) => {
+    return Object.entries(classes).reduce((formatted, [course, professorFilter]) => {
+        formatted[course] = Object.entries(professorFilter).reduce((profList, [prof, isToggled]) => {
+            if(isToggled){
+                profList.push(prof)
+            }
+
+            return profList
+        }, [])
+
+        return formatted
+    }, {})
+}
 
 export const formatStateForServer = (classes, timePreference, unavailabilities) => {
 
@@ -70,7 +83,7 @@ export const formatStateForServer = (classes, timePreference, unavailabilities) 
     }
 
     return {
-        classes,
+        classes: formatClassesForServer(classes),
         sortTimesBy: timePreference,
         unavailabilities: formattedUnavailabilities
     }
@@ -132,3 +145,5 @@ export const parseSchedule = (schedule) => {
             return parsedSchedule
         }, [])
 }
+
+export const PROFESSOR_URL = "http://localhost:3000/api/get_profs"

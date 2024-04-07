@@ -12,19 +12,20 @@ app = Flask(__name__)
 def get_schedule():
     # Get the user submitted data
     data = request.get_json()
-    classes = data.get('classes')
-    classes = [c.upper() for c in classes]
+    class_preferences = data.get('classes')
+    class_preferences = {c.upper(): v for c, v in class_preferences.items()}
+    classes = [c.upper() for c in class_preferences.keys()]
     sort_by = data.get('sortTimesBy')
     unavailability = data.get('unavailabilities')
-
+    
     # Scrape the classes
     scraper = Scraper(classes)
-    classes = scraper.get_classes()
+    classes = scraper.get_classes(professor_prefs=class_preferences)
 
     # Generate the schedules
-    schedules = generate_schedules(classes, sort_by, unavailability)
+    schedules, num_combs = generate_schedules(classes, sort_by, unavailability)
     # Might be less than 3 schedules
-    top3 = [schedules.get()[2] for _ in range(3) if not schedules.empty()]
+    top3 = [schedules.get()[-1] for _ in range(3) if not schedules.empty()]
 
     # Add the CAPE data
     for n, schedule in enumerate(top3):
@@ -35,12 +36,14 @@ def get_schedule():
         for day in schedule.schedule.values():
             if len(day) >= 2:
                 for i in range(len(day) - 1):
-                    from_lat, from_long = get_location_lat_lng(day[i]['location'].split(" ")[0])
-                    to_lat, to_long = get_location_lat_lng(day[i + 1]['location'].split(" ")[0])
-                    time_, distance = calculate_distance_and_time(from_lat, from_long, to_lat, to_long)
-                    day[i+1]['walkingTime'] = time_
+                    if int(day[i+1]['start']) <= int(day[i]['end']) + 20:
+                        from_lat, from_long = get_location_lat_lng(day[i]['location'].split(" ")[0])
+                        to_lat, to_long = get_location_lat_lng(day[i + 1]['location'].split(" ")[0])
+                        time_, distance = calculate_distance_and_time(from_lat, from_long, to_lat, to_long)
+                        day[i+1] = day[i+1].copy()
+                        day[i+1]['walkingTime'] = time_
 
-    return json.dumps([schedule.schedule for schedule in top3])
+    return json.dumps({'numCombs': num_combs, 'schedules': [schedule.schedule for schedule in top3]})
 
 @app.route('/get_profs', methods=['POST'])
 def get_profs():

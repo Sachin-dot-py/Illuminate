@@ -12,6 +12,7 @@ import { Calendar, Views, momentLocalizer } from 'react-big-calendar';
 import { MOCK_EVENTS } from './events'
 import moment from 'moment'
 import { CustomCalendar } from './Components/CustomCalendar';
+import { ProfessorFilterer } from './Components/ProfessorFilterer';
 
 //MONDAY = 1
 //TUESDAY = 2
@@ -30,10 +31,11 @@ function App() {
 
 
   const URL = "http://localhost:3000/api/get_schedule"
-  const [courses, setCourses] = useState([])
+  const [courses, setCourses] = useState({})
   const [timePreference, setTimePreference] = useState("LATEST")
   const [unavailabilities, setUnavailabilities] = useState(MOCK_UNAVAILABILITIES)
   const [schedules, setSchedules] = useState([])
+  const [selectedCourseForFilter, setSelectedCourseForFilter] = useState(undefined)
 
   // Need a list of classes ["MATH 20E", "ECON 1", "VIS 9"]
   // Choose Earliest or latest (end early, start late)
@@ -67,15 +69,23 @@ function App() {
 
 
   useEffect(() => {
-
     // fetchData()
   }, [])
+
+  useEffect(() => {
+    if(!courses[selectedCourseForFilter]){
+      setSelectedCourseForFilter(undefined)
+    }
+  }, [courses])
 
   console.log(new Date())
   console.log(moment().startOf('isoWeek'))
 
   return (
     <div className="App">
+      <p> {JSON.stringify(courses)} </p>
+      <p> {`Selected course ${selectedCourseForFilter}`}</p>
+
       <section>
         <h2>
           UCSD couse auto-scheduler
@@ -86,10 +96,11 @@ function App() {
       </section>
       <div className={"scheduleInfoContainer"}>
         <TimePreferenceSelector timePreference={timePreference} setTimePreference={setTimePreference} />
-        <CourseCollector courses={courses} setCourses={setCourses}/>
-        <button onClick={() => fetchData()} disabled={courses.length < 1}>Generate Schedule</button>
+        <CourseCollector courses={courses} setCourses={setCourses} setSelectedCourseForFilter={setSelectedCourseForFilter}/>
+        <button onClick={() => fetchData()} disabled={courses.length < 2}>Generate Schedule</button>
       </div>
         <UnavailabilityCollector unavailabilities={unavailabilities} setUnavailabilities={setUnavailabilities}/>
+        <ProfessorFilterer selectedCourseForFilter={selectedCourseForFilter} courses={courses} setCourses={setCourses} />
       <CustomCalendar schedules={schedules}/>
     </div>
   );
