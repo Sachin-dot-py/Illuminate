@@ -161,14 +161,10 @@ function App() {
             color="#e15b64"
           />
       </div>
-        <UnavailabilityCollector unavailabilities={unavailabilities} setUnavailabilities={setUnavailabilities}/>
-        <div className={"numCombinationsTextContainer"} style={{"visibility": "hidden"}}>
-          From <b><span className={"numCombinationsContainer"}>xxx</span></b> possible combinations, we picked these ones for you:<br/>Tip: Hover over a class to view CAPEs data for that professor!
-        </div>
       </div>
       <UnavailabilityCollector unavailabilities={unavailabilities} setUnavailabilities={setUnavailabilities}/>
       <div className={"numCombinationsTextContainer"} style={{ visibility: "hidden", color: "black", fontSize: "20px" }}>
-  From <b><span className={"numCombinationsContainer"}>xxx</span></b> possible combinations, we picked these ones for you:
+  From <b><span className={"numCombinationsContainer"}>xxx</span></b> possible combinations, we picked these ones for you:<br/>Tip: Hover over a class to view CAPEs data for that professor!
 </div>
 
       
