@@ -12,14 +12,15 @@ app = Flask(__name__)
 def get_schedule():
     # Get the user submitted data
     data = request.get_json()
-    classes = data.get('classes')
-    classes = [c.upper() for c in classes]
+    class_preferences = data.get('classes')
+    class_preferences = {c.upper(): v for c, v in class_preferences.items()}
+    classes = [c.upper() for c in class_preferences.keys()]
     sort_by = data.get('sortTimesBy')
     unavailability = data.get('unavailabilities')
-
+    
     # Scrape the classes
     scraper = Scraper(classes)
-    classes = scraper.get_classes()
+    classes = scraper.get_classes(professor_prefs=class_preferences)
 
     # Generate the schedules
     schedules = generate_schedules(classes, sort_by, unavailability)
