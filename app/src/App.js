@@ -36,6 +36,7 @@ function App() {
   const [unavailabilities, setUnavailabilities] = useState(MOCK_UNAVAILABILITIES)
   const [schedules, setSchedules] = useState([])
   const [selectedCourseForFilter, setSelectedCourseForFilter] = useState(undefined)
+  const [scheduleCombinations, setScheduleCombinations] = useState(undefined)
 
   // Need a list of classes ["MATH 20E", "ECON 1", "VIS 9"]
   // Choose Earliest or latest (end early, start late)
@@ -70,6 +71,7 @@ function App() {
     document.querySelector(".numCombinationsTextContainer").style.visibility = "visible"
 
     setSchedules(res['schedules'].map(parseSchedule))
+    setScheduleCombinations(res['numCombs'])
     console.log(schedules, "Network responded and parsed these events")
   }
 
