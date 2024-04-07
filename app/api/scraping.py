@@ -147,7 +147,11 @@ class Scraper:
                         days = cols[5].getText().strip()
                         for key in self.days_map.keys(): # Convert to MTuW to 123
                             days = days.replace(key, self.days_map[key])
-                        time1, time2 = self.parse_times(cols[6].text)
+                        try:
+                            time1, time2 = self.parse_times(cols[6].text)
+                        except:
+                            print("Error parsing times:", cols[6].text)
+                            continue
                         location = cols[7].getText().strip()
                         room = cols[8].getText().strip()
                         instructor = cols[9].getText().strip()
