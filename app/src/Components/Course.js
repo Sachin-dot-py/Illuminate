@@ -1,8 +1,9 @@
 import "./Course.css"
 import { PROFESSOR_URL } from "../utils"
 import { useState, useEffect } from "react"
+import { ProfessorFilterer } from "./ProfessorFilterer"
 
-export const Course = ({courseName, onDelete, setCourses, setSelectedCourseForFilter}) => {
+export const Course = ({courseName, onDelete, setCourses, setSelectedCourseForFilter, selectedCourseForFilter, courses}) => {
 
     const [areProfessorsLoading, setAreProfessorsLoading] = useState(false)
     const [areProfessorsFetched, setAreProfessorsFetched] = useState(false)
@@ -56,8 +57,11 @@ export const Course = ({courseName, onDelete, setCourses, setSelectedCourseForFi
         }
     }, [])
 
-    return <div className="course">
-        <p className="course-title" onClick={onClick}> {courseName} </p>
-        <button onClick={onDelete}> X </button>
+    return <div className="courseContainer">
+        <div className="course">
+            <p className="course-title" onClick={onClick}> {courseName} </p>
+            <button onClick={onDelete}> X </button>
+        </div>
+        <ProfessorFilterer selectedCourseForFilter={courseName} courses={courses} setCourses={setCourses} />
     </div>
 }
