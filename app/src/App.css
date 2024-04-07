@@ -24,12 +24,14 @@
 
 .scheduleInfoContainer{
   display: flex;
-  border: 1px solid red;
+  border: 0px solid rgb(255, 251, 251);
   align-items: center;
   justify-content:space-between;
   width: 65%;
   margin: 10px auto;
   padding: 10px;
+  background-color: rgba(255, 255, 255, 0.7); /* white overlay added here */
+  border-radius: 10px;
 }
 
 .unavailabilityContainer {
@@ -76,11 +78,14 @@ button:hover {
 
 .unavailabilitySelectorsContainer button {
   width: 50%;
+  border: 2px solid pink;
 }
 .unavailabilitySelectorsContainer select {
   width: 50%
 }
-
+.unavailabilitiesList{
+  border: 2px solid pink;
+}
 .radioContainer {
   display: flex;
   flex-direction: column;
@@ -104,3 +109,37 @@ button:hover {
 }
 
 
+.App {
+  position: relative;
+  min-height: 100vh;
+  background: transparent;
+}
+
+.App::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: inherit;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.5; 
+  pointer-events: none;
+  z-index: -1;
+}
+.calendarContainer {
+  background-color: rgba(255, 255, 255, 0.8); 
+  
+  border-radius: 10px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  width: 60%; 
+  
+}
+.scheduleHeading {
+  color: white;
+  font-size: 24px; 
+  font-weight: bold; 
+  
+}
