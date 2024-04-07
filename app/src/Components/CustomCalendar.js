@@ -46,7 +46,7 @@ export const CustomCalendar = ({schedules}) => {
         events={currentScheduleIndex === -1 ? [] : schedules[currentScheduleIndex]} 
         startAccessor={"start"} 
         endAccessor={"end"} 
-        style={{height: 1200, width: "100%"}}
+        style={{height: 1300, width: "100%"}}
         defaultView={'work_week'}
         views={["work_week"]}
         min={new Date(2020, 1, 0, 7, 0, 0)} 
@@ -56,6 +56,15 @@ export const CustomCalendar = ({schedules}) => {
           work_week: {
             header: ({date, localizer}) => <p> {moment(date).format("dddd")} </p>,
             toolbar: () => <div> {`Your Schedule(s)`} </div>,
+            event: ({event}) => {
+              const {code, location, section, type, professor, walkingTime, percentClass, studyHours, percentProf} = event
+              return <div>
+                <p className={"event-txt"}> <strong> {code} {studyHours ? `| ${studyHours}hrs/wk 🕗` : ""} </strong> </p>
+                <p className={"event-txt"}> <strong> {type} | {section} | {location} </strong> </p>
+                <p className={"event-txt"}> <strong> {professor} {percentProf ? `| ${percentProf} 👍` : ""} </strong> </p>
+                { walkingTime && <p className={"event-txt walking-warning"}> <strong> {walkingTime} 🚶 </strong> </p> }
+              </div>
+            }
             // resourceHeader: () => <div>Hello there</div>
           }
         }}

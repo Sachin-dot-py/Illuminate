@@ -27,3 +27,12 @@
 .rbc-timeslot-group {
     height: 300px !important;
 }
+
+.event-txt {
+    font-size: 10px;
+    margin: 0px;
+}
+
+.walking-warning {
+    color: pink
+}
