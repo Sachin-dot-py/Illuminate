@@ -22,6 +22,14 @@ class Schedule:
                 continue
             start_times.append(min([int(part['start']) for part in self.schedule[day]]))
         start_times.sort()
+        return median(start_times)
+    
+    def get_min_start_time(self):
+        start_times = []
+        for day in self.schedule:
+            if len(self.schedule[day]) == 0:
+                continue
+            start_times.append(min([int(part['start']) for part in self.schedule[day]]))
         return min(start_times)
 
     def get_median_end_time(self):
@@ -32,6 +40,14 @@ class Schedule:
             end_times.append(max([int(part['end']) for part in self.schedule[day]]))
         end_times.sort()
         return median(end_times)
+    
+    def get_max_end_time(self):
+        end_times = []
+        for day in self.schedule:
+            if len(self.schedule[day]) == 0:
+                continue
+            end_times.append(max([int(part['end']) for part in self.schedule[day]]))
+        return max(end_times)
     
     def check_conflict(self, class_parts):
         for part in class_parts:  # Lecture and Discussion(s)
@@ -70,11 +86,11 @@ def generate_schedules(classes, sort_by, unavailabilities):
                 break
         else:
             if sort_by == 'EARLIEST':
-                schedules.put((schedule.get_median_end_time(), i, schedule))
+                schedules.put((schedule.get_median_end_time(), schedule.get_max_end_time(), i, schedule))
             else:
-                schedules.put((schedule.get_median_start_time()*-1, i, schedule))
+                schedules.put((schedule.get_median_start_time()*-1, schedule.get_min_start_time()*-1, i, schedule))
     
-    return schedules
+    return schedules, len(combinations)
     
     
 
