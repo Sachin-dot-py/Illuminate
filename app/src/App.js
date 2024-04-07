@@ -5,8 +5,12 @@ import { Course } from './Components/Course';
 import { CourseCollector } from './Components/CourseCollector';
 import { TimePreferenceSelector } from './Components/TimePreferenceSelector';
 import TimeRange from "react-time-range"
+import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { UnavailabilityCollector } from './Components/UnavailabilityCollector';
 import { formatStateForServer, parseTimestamp, timestampToMilitary } from './utils';
+import { Calendar, momentLocalizer } from 'react-big-calendar';
+import { MOCK_EVENTS } from './events'
+import moment from 'moment'
 
 //MONDAY = 1
 //TUESDAY = 2
@@ -14,6 +18,7 @@ import { formatStateForServer, parseTimestamp, timestampToMilitary } from './uti
 
 function App() {
 
+  const localizer = momentLocalizer(moment)
   const MOCK_UNAVAILABILITIES = {
     "MONDAY" : [],
     "TUESDAY" : [],
@@ -70,6 +75,7 @@ function App() {
       <TimePreferenceSelector timePreference={timePreference} setTimePreference={setTimePreference} />
       <CourseCollector courses={courses} setCourses={setCourses}/>
       <UnavailabilityCollector unavailabilities={unavailabilities} setUnavailabilities={setUnavailabilities}/>
+      <Calendar localizer={localizer} events={MOCK_EVENTS} startAccessor={"start"} endAccessor={"end"} style={{height: 500}}/>
       <button onClick={() => fetchData()}>Foo</button>
     </div>
   );
