@@ -1,9 +1,10 @@
 import csv
 
+
 def read_csv():
     with open('../resources/capes_data.csv', 'r') as file:
         csvreader = csv.reader(file)
-        
+
         fields = next(csvreader)
         rows = []
 
@@ -11,11 +12,13 @@ def read_csv():
             rows.append(row)
     return rows
 
+
 def find_comb(prof, course, data):
     for row in data:
         if (''.join(prof.split(',')) == row[0]) and ((course.upper() + " ") in row[1]):
             return row
     return False
+
 
 def get_capes_data(schedule):
     data = read_csv()
