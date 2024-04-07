@@ -104,7 +104,7 @@ class Scraper:
         
         return response.text
     
-    def get_classes(self):
+    def get_classes(self, professor_prefs=None):
         responsetext = self.make_request(page=1)
         soup = BeautifulSoup(responsetext, 'html.parser')
         pagetext = soup.find_all("table")[2].find("td", {"align": "right"}).text.encode('ascii', 'ignore').decode('ascii').strip()
@@ -161,6 +161,9 @@ class Scraper:
                             # Reset class parts and add this to class list
                             class_parts = [new_class]
                         else:
+                            # Check if this professor is preferred by the user. If not, don't add this class.
+                            if professor_prefs and new_class['professor'] not in professor_prefs.get(cur_dept + " " + cur_class, []):
+                                continue
                             # Add to class list with whatever class is here
                             if cur_dept + " " + cur_class in classes:
                                 classes[cur_dept + " " + cur_class].append(class_parts + [new_class])
