@@ -23,7 +23,7 @@ function App() {
   }
 
 
-  const URL = "http://localhost:3000/api/get_something"
+  const URL = "http://localhost:3000/api/get_schedule"
   const [courses, setCourses] = useState([])
   const [timePreference, setTimePreference] = useState("LATEST")
   const [unavailabilities, setUnavailabilities] = useState(MOCK_UNAVAILABILITIES)
@@ -43,15 +43,24 @@ function App() {
   const onSendRequest = () => {
     console.log(formatStateForServer(courses,timePreference,unavailabilities))
   }
+  
+  const fetchData = async () => {
+    console.log(URL, "EEEE")
+    const res = await fetch(URL, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formatStateForServer(courses, timePreference, unavailabilities))
+    }).then((res) => res.json())
+    console.log(res)
+  }
+
+
 
   useEffect(() => {
-    const fetchData = async () => {
-      console.log(URL, "EEEE")
-      const res = await fetch(URL).then((res) => res.text())
-      console.log(res)
-    }
 
-    fetchData()
+    // fetchData()
   }, [])
 
 
@@ -61,7 +70,7 @@ function App() {
       <TimePreferenceSelector timePreference={timePreference} setTimePreference={setTimePreference} />
       <CourseCollector courses={courses} setCourses={setCourses}/>
       <UnavailabilityCollector unavailabilities={unavailabilities} setUnavailabilities={setUnavailabilities}/>
-      <button onClick={onSendRequest}>Foo</button>
+      <button onClick={() => fetchData()}>Foo</button>
     </div>
   );
 }
