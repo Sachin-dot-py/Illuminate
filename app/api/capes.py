@@ -13,7 +13,7 @@ def read_csv():
 
 def find_comb(prof, course, data):
     for row in data:
-        if (prof == row[0]) and ((course.upper() + " ") in row[1]):
+        if (''.join(prof.split(',')) == row[0]) and ((course.upper() + " ") in row[1]):
             return row
     return False
 
