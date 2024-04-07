@@ -118,6 +118,8 @@ function getClassEventStartAndEnd(isoDay, classInfo) {
     return [classStartDate.toDate(), classEndDate.toDate()];
 }
 
+let classColorMapping = {};
+
 //schedule CSE 12, start, end
 export const parseScheduleUnit = (isoDay, scheduleUnit) => {
 
@@ -126,11 +128,26 @@ export const parseScheduleUnit = (isoDay, scheduleUnit) => {
 
     const title = `${code}\n${professor}\n ${type} | ${section}\n ${location}\n${walkingTime ?? "N/A"}🚶`
 
+    const colors = ["#bde0fe", "#ffc8dd", "#a2d2ff", "#ffafcc", "#cdb4db", "#e9edc9"];
+
+    let color_id = 0;
+
+    if (Object.keys(classColorMapping).length === 0){
+        color_id = 0;
+        classColorMapping[code] = color_id;
+    } else if (classColorMapping[code]){
+        color_id = classColorMapping[code];
+    } else {
+        color_id = Math.max(...Object.values(classColorMapping)) + 1;
+        classColorMapping[code] = color_id;
+    }
+
     return {
         id: Math.random() * 100,
         title: title,
         start: startTime,
         end: endTime,
+        color: colors[color_id],
         code,
         professor,
         type,
