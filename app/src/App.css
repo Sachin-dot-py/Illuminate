@@ -22,17 +22,32 @@
   color: #61dafb;
 }
 
-.scheduleInfoContainer{
+.scheduleInfoContainer {
   display: flex;
   border: 0px solid rgb(255, 251, 251);
   align-items: center;
   justify-content:space-between;
-  width: 65%;
+  width: 80%;
   margin: 10px auto;
   padding: 10px;
   background-color: rgba(255, 255, 255, 0.7); /* white overlay added here */
   border-radius: 10px;
 }
+
+
+
+.unavailabilityCollectorContainer {
+  border: 0px solid rgb(255, 251, 251);
+  align-items: center;
+  justify-content:space-between;
+  width: 80%;
+  margin: 10px auto;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.7); /* white overlay added here */
+  border-radius: 10px;
+}
+
+
 
 .unavailabilityContainer {
   display:inline-flex;
@@ -44,11 +59,10 @@
 .unavailabilitiesList {
   display: flex;
   flex-wrap: wrap;
-  width: 80%;
+  width: 90%;
   margin: 10px auto;
   flex-direction: row;
 
-  border: 1px solid red;
   border-radius: 10px;
 }
 
@@ -69,7 +83,6 @@ button:hover {
 
 .unavailabilitySelectorsContainer {
   width: 50%;
-  border: 2px solid pink;
   display: flex;
   margin: 0 auto;
   justify-content: center;
@@ -78,13 +91,11 @@ button:hover {
 
 .unavailabilitySelectorsContainer button {
   width: 50%;
-  border: 2px solid pink;
 }
 .unavailabilitySelectorsContainer select {
   width: 50%
 }
 .unavailabilitiesList{
-  border: 2px solid pink;
 }
 .radioContainer {
   display: flex;
@@ -100,9 +111,16 @@ button:hover {
 }
 
 .course {
-  display: inline;
   margin: 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
+
+label {
+  margin-right: 10px;
+}
+
 .courselist {
   margin-top: 10px;
 }

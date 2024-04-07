@@ -8,7 +8,14 @@
     border-radius: 10px;
 }
 
+.course button {
+    padding: 5px 10px;
+    border-radius: 10%;
+    background-color: #e63946;
+}
+
 .course-title {
+    margin: 0;
     margin-right: 10px;
 }
 

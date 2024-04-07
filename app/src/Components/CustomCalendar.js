@@ -72,7 +72,7 @@ export const CustomCalendar = ({schedules}) => {
         components={{
           work_week: {
             header: ({date, localizer}) => <p> {moment(date).format("dddd")} </p>,
-            toolbar: () => <div style={{ fontSize: '24px' }}>Your Schedule(s)</div>,
+            toolbar: () => <div style={{ fontSize: '24px' } } className={"numCombinationsTextContainer"}>Your Schedule(s)</div>,
 
             event: ({event}) => {
               const {code, location, section, type, professor, walkingTime, percentClass, studyHours, percentProf} = event
