@@ -91,7 +91,7 @@ function App() {
           UCSD couse auto-scheduler
         </h2>
         <p>
-          Input at least two courses to generate a schedule!
+          Input at least some courses to generate a schedule!
         </p>
       </section>
       <div className={"scheduleInfoContainer"}>
