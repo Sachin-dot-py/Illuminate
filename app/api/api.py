@@ -33,8 +33,9 @@ def get_schedule():
 
     # Add Distance between classes
     for schedule in top3:
-        for day in schedule.schedule.values():
+        for day in list(schedule.schedule.values()):
             if len(day) >= 2:
+                day.sort(key=lambda e : e['start'])
                 for i in range(len(day) - 1):
                     new_minutes = (int(day[i]['end']) % 100) + 20
                     new_time = (((int(day[i]['end']) // 100) + (new_minutes // 60)) * 100) + (new_minutes % 60)
