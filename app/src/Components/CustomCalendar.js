@@ -50,7 +50,7 @@ export const CustomCalendar = ({schedules}) => {
         defaultView={'work_week'}
         views={["work_week"]}
         min={new Date(2020, 1, 0, 7, 0, 0)} 
-        max={new Date(2020, 1, 0, 20, 0, 0)}
+        max={new Date(2020, 1, 0, 22, 0, 0)}
         allDayMaxRows={0}
         components={{
           work_week: {
