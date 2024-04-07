@@ -1,0 +1,9 @@
+.course {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.course-title {
+    margin-right: 10px;
+}
