@@ -76,6 +76,7 @@ function App() {
 
   return (
     <div className="App">
+      <p> {JSON.stringify(courses)} </p>
       <section>
         <h2>
           UCSD couse auto-scheduler
