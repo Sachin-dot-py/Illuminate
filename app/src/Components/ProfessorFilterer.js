@@ -17,7 +17,7 @@ export const ProfessorFilterer = ({selectedCourseForFilter, courses, setCourses}
         {
             courses[selectedCourseForFilter] ?
             <div>
-                <p> Professors for {selectedCourseForFilter}</p>
+                {/* <p> Professors for {selectedCourseForFilter}</p> */}
                 {Object.entries(courses[selectedCourseForFilter]).map(([professor, isProfessorToggled]) => {
                     return <label>
                         <input 
