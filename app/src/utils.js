@@ -46,11 +46,13 @@ const DAY_MAPPING = {
 
 export const formatStateForServer = (classes, timePreference, unavailabilities) => {
 
+    //DO NOT DIRECTLY MODIFY UNAVAILABILITIES
+    const temp_unavailabilities = {...unavailabilities}
     const formattedUnavailabilities = {}
 
     //Turn each of the timestamps into the right military time
     DAYS.forEach((day) => {
-        unavailabilities[day] = unavailabilities[day].map(([startTime, endTime]) => {
+        temp_unavailabilities[day] = temp_unavailabilities[day].map(([startTime, endTime]) => {
             const newStartTime = parseTimestamp(startTime)
             const newEndTime = parseTimestamp(endTime)
 
@@ -59,7 +61,7 @@ export const formatStateForServer = (classes, timePreference, unavailabilities) 
     })
 
     //Switch the keys to 1,2,3,4,5 for the days of the week.
-    for(let [key,value] of Object.entries(unavailabilities)){
+    for(let [key,value] of Object.entries(temp_unavailabilities)){
         let newKey = DAY_MAPPING[key]
         formattedUnavailabilities[newKey] = value
     }
