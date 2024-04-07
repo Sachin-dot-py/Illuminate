@@ -26,6 +26,22 @@ export const CustomCalendar = ({schedules}) => {
     setCurrentScheduleIndex(currentScheduleIndex - 1)
   }
 
+  const eventStyleGetter = (event, start, end, isSelected) => {
+    console.log(event);
+    let style = {
+        backgroundColor: event.color,
+        borderRadius: '0px',
+        opacity: 0.8,
+        color: 'black',
+        border: '0px',
+        display: 'block'
+    };
+
+    return {
+        style: style
+    };
+  }
+
   useEffect(() => {
     if(schedules.length > 0){
       setCurrentScheduleIndex(0)
@@ -51,6 +67,7 @@ export const CustomCalendar = ({schedules}) => {
         views={["work_week"]}
         min={new Date(2020, 1, 0, 7, 0, 0)} 
         max={new Date(2020, 1, 0, 22, 0, 0)}
+        eventPropGetter={(eventStyleGetter)}
         allDayMaxRows={0}
         components={{
           work_week: {
