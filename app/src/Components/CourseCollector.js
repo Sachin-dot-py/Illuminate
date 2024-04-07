@@ -22,11 +22,11 @@ export const CourseCollector = ({courses, setCourses}) => {
         clearCourseInput()
     }
 
-    return <>
+    return <div className="courseCollectorContainer">
         <p> Course Input </p>
         
         <form onSubmit={onSubmit}>
-            <input onChange={(e) => setCourseInput(e.target.value)} value={courseInput} name="courseInput"/>
+            <input onChange={(e) => setCourseInput(e.target.value)} value={courseInput} name="courseInput" placeholder="Enter course title and press enter"/>
         </form>
 
         {
@@ -36,6 +36,6 @@ export const CourseCollector = ({courses, setCourses}) => {
             
             />)
         }
-    </>
+    </div>
 
 }
