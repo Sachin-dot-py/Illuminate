@@ -36,7 +36,9 @@ def get_schedule():
         for day in schedule.schedule.values():
             if len(day) >= 2:
                 for i in range(len(day) - 1):
-                    if int(day[i + 1]['start']) <= int(day[i]['end']) + 20:
+                    new_minutes = (int(day[i]['end']) % 100) + 20
+                    new_time = (((int(day[i]['end']) // 100) + (new_minutes // 60)) * 100) + (new_minutes % 60)
+                    if int(day[i + 1]['start']) <= new_time:
                         from_lat, from_long = get_location_lat_lng(day[i]['location'].split(" ")[0])
                         to_lat, to_long = get_location_lat_lng(day[i + 1]['location'].split(" ")[0])
                         time_, distance = calculate_distance_and_time(from_lat, from_long, to_lat, to_long)
