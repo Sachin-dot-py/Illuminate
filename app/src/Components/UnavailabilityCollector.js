@@ -21,6 +21,7 @@ export const UnavailabilityCollector = ({unavailabilities, setUnavailabilities})
     }
 
     const editTimeRange = (day, newStartTime, newEndTime, idx) => {
+
         setUnavailabilities((oldAvailabilities) => {
             let newAvailabilities = {...oldAvailabilities}
             newAvailabilities[day][idx] = [newStartTime, newEndTime]            
@@ -32,7 +33,7 @@ export const UnavailabilityCollector = ({unavailabilities, setUnavailabilities})
 
         <select value={currentDay} onChange={(e) => setCurrentDay(e.target.value)}>
             {DAYS.map((day) => {
-                return <option value={day}> {day} </option>
+                return <option key={day} value={day}> {day} </option>
             })}
         </select>
         
