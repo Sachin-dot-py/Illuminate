@@ -76,10 +76,10 @@ export const CustomCalendar = ({schedules}) => {
             event: ({event}) => {
               const {code, location, section, type, professor, walkingTime, percentClass, studyHours, percentProf} = event
               return <div>
-                <p className={"event-txt"}> <strong> {code} {studyHours ? `| ${studyHours}hrs/wk 🕗` : ""} </strong> </p>
+                <p className={"event-txt"}> <strong> {code} </strong> </p>
                 <p className={"event-txt"}> <strong> {type} | {section} | {location} </strong> </p>
-                <p className={"event-txt"}> <strong> {professor} {percentProf ? `| ${percentProf} 👍` : ""} </strong> </p>
-                { walkingTime && <p className={"event-txt walking-warning"}> <strong> {walkingTime} 🚶 </strong> </p> }
+                <p className={"event-txt"}> <strong> {professor} </strong> </p>
+                { walkingTime && <p className={"event-txt walking-warning"}> <strong>🚶Walking time from previous class: {walkingTime} </strong> </p> }
               </div>
             }
             // resourceHeader: () => <div>Hello there</div>

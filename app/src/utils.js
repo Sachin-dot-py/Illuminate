@@ -124,9 +124,17 @@ let classColorMapping = {};
 export const parseScheduleUnit = (isoDay, scheduleUnit) => {
 
     const [startTime, endTime] = getClassEventStartAndEnd(isoDay, scheduleUnit)
-    const {code, location, section, type, professor, walkingTime, percentClass, studyHours, percentProf} = scheduleUnit
+    const {code, location, section, type, professor, walkingTime, percentClass, studyHours, percentProf, avgGrade} = scheduleUnit
 
-    const title = `${code}\n${professor}\n ${type} | ${section}\n ${location}\n${walkingTime ?? "N/A"}🚶`
+    // const title = `${code}\n${professor}\n ${type} | ${section}\n ${location}\n${walkingTime ?? "N/A"}🚶`
+    let title_text = ``
+    if (percentClass == undefined) {
+        title_text = `\nNo CAPEs data for this class and professor.`
+    }
+    else {
+        title_text = `\n📚Percentage Recommended Class: ${percentClass}\n👍Percentage Recommended Professor: ${percentProf}\n🕒Study Hours per Week: ${studyHours}\n🎓Average Grade Received: ${avgGrade}`
+    }
+    const title = title_text
 
     const colors = ["#bde0fe", "#ffc8dd", "#a2d2ff", "#ffafcc", "#cdb4db", "#e9edc9"];
 
