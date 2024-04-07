@@ -1,13 +1,14 @@
 ### given 2 locations the function will return the distance + time between them 
 import requests
+from constants import MAP_ID, API_KEY
 
-def get_location_lat_lng(location_name, map_id, api_key):
+def get_location_lat_lng(location_name):
     search_url = "https://api.concept3d.com/search"
     params = {
-        "map": map_id,
+        "map": MAP_ID,
         "q": location_name,
         "ppage": 5,
-        "key": api_key
+        "key": API_KEY
     }
     response = requests.get(search_url, params=params)
     
@@ -21,11 +22,11 @@ def get_location_lat_lng(location_name, map_id, api_key):
             return location_data["lat"], location_data["lng"]
     return None, None
 
-def calculate_distance_and_time(from_lat, from_lng, to_lat, to_lng, map_id, api_key):
+def calculate_distance_and_time(from_lat, from_lng, to_lat, to_lng):
     wayfinding_url = "https://api.concept3d.com/wayfinding/"
     
     params = {
-        "map": map_id,
+        "map": MAP_ID,
         "v2": "true",
         "fromLat": from_lat,
         "fromLng": from_lng,
@@ -35,7 +36,7 @@ def calculate_distance_and_time(from_lat, from_lng, to_lat, to_lng, map_id, api_
         "toLevel": "0",    
         "currentLevel": "0",  
         "stamp": "MCOWY3k2",  
-        "key": api_key
+        "key": API_KEY
     }
     response = requests.get(wayfinding_url, params=params)
     # Debugging prints
@@ -46,22 +47,3 @@ def calculate_distance_and_time(from_lat, from_lng, to_lat, to_lng, map_id, api_
         data = response.json()
         return data["formattedDuration"], data["distance"]
     return None, None
-
-
-#example usage 
-'''map_id = "1005"
-api_key = "0001085cc708b9cef47080f064612ca5"
-from_location = "WLH 2005"
-to_location = "RIMAC"
-
-
-from_lat, from_lng = get_location_lat_lng(from_location, map_id, api_key)
-to_lat, to_lng = get_location_lat_lng(to_location, map_id, api_key)
-
-
-if None not in (from_lat, from_lng, to_lat, to_lng):
-    time, distance = calculate_distance_and_time(from_lat, from_lng, to_lat, to_lng, map_id, api_key)
-    print(f"Time: {time}, Distance: {distance} meters")
-else:
-    print("Could not retrieve location information for one or both of the locations.")
-'''

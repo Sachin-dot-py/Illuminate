@@ -1,6 +1,7 @@
 from itertools import product
-from statistics import median
+from statistics import median, mean
 from queue import PriorityQueue
+import time
 
 class Schedule:
     def __init__(self, unavailabilities):
@@ -18,28 +19,32 @@ class Schedule:
     def get_median_start_time(self):
         start_times = []
         for day in self.schedule:
-            start_times.append(min([part['start'] for part in self.schedule[day]]))
+            if len(self.schedule[day]) == 0:
+                continue
+            start_times.append(min([int(part['start']) for part in self.schedule[day]]))
         start_times.sort()
-        return median(start_times)
+        return min(start_times)
 
     def get_median_end_time(self):
         end_times = []
         for day in self.schedule:
-            end_times.append(max([part['end'] for part in self.schedule[day]]))
+            if len(self.schedule[day]) == 0:
+                continue
+            end_times.append(max([int(part['end']) for part in self.schedule[day]]))
         end_times.sort()
         return median(end_times)
     
     def check_conflict(self, class_parts):
         for part in class_parts:  # Lecture and Discussion(s)
-            for day in part['day'].split(""):
+            for day in part['day']:
                 day = int(day)
                 for existing_class in self.schedule[day]:
                     # Is overlapping
                     if (part['start'] >= existing_class['start'] and part['start'] <= existing_class['end']) or (existing_class['start'] >= part['start'] and existing_class['start'] <= part['end']):
                         return True
-                for unavailability in self.unavailabilities[day]:
+                for unavailability in self.unavailabilities[str(day)]:
                     # Is overlapping
-                    if (part['start'] >= unavailability[0] and part['start'] <= unavailability[1]) or (unavailability[0] >= part['start'] and unavailability[0] <= part['end']):
+                    if (int(part['start']) >= unavailability[0] and int(part['start']) <= unavailability[1]) or (unavailability[0] >= int(part['start']) and unavailability[0] <= int(part['end'])):
                         return True
         return False
                 
@@ -48,7 +53,7 @@ class Schedule:
         if self.check_conflict(class_parts):
             return False
         for part in class_parts:  # Lecture and Discussion(s)
-            for day in part['day'].split(""):
+            for day in part['day']:
                 day = int(day)
                 self.schedule[day].append(part)
         return True
@@ -66,9 +71,9 @@ def generate_schedules(classes, sort_by, unavailabilities):
                 break
         else:
             if sort_by == 'EARLIEST':
-                schedules.put((schedule.get_median_end_time(), schedule))
+                schedules.put((schedule.get_median_end_time(), time.time(), schedule))
             else:
-                schedules.put((schedule.get_median_start_time()*-1, schedule))
+                schedules.put((schedule.get_median_start_time()*-1, time.time(), schedule))
     
     return schedules
     
