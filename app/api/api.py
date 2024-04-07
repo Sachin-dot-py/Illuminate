@@ -13,6 +13,7 @@ def get_schedule():
     # Get the user submitted data
     data = request.get_json()
     classes = data.get('classes')
+    classes = [c.upper() for c in classes]
     sort_by = data.get('sortTimesBy')
     unavailability = data.get('unavailabilities')
 
@@ -22,7 +23,8 @@ def get_schedule():
 
     # Generate the schedules
     schedules = generate_schedules(classes, sort_by, unavailability)
-    top3 = [schedules.get()[2] for _ in range(3)]
+    # Might be less than 3 schedules
+    top3 = [schedules.get()[2] for _ in range(3) if not schedules.empty()]
 
     # Add the CAPE data
     for n, schedule in enumerate(top3):
