@@ -39,7 +39,7 @@ export const UnavailabilityCollector = ({unavailabilities, setUnavailabilities})
             </select>
             <button onClick={() => addUnavailabilityToDay(currentDay)}> Add Unavailability </button>
         </div>
-        
+        <p>{`You are unavailable at these times on ${currentDay}`}</p>
         <div className={"unavailabilitiesList"}>
             {unavailabilities[currentDay].length ? unavailabilities[currentDay].map(([startTime, endTime], idx) => {
                 // console.log("Rendering timerange with", startTime, endTime, "on day", currentDay, "in index", idx)

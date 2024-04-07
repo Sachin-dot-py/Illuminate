@@ -23,3 +23,7 @@
 .scrollerstatus {
     margin: 0 10px;
 }
+
+.rbc-timeslot-group {
+    height: 300px !important;
+}

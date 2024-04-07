@@ -46,7 +46,8 @@
   margin: 10px auto;
   flex-direction: row;
 
-  border: 1px solid red
+  border: 1px solid red;
+  border-radius: 10px;
 }
 
 .noUnavailabilitiesText {
@@ -87,7 +88,19 @@ button:hover {
 
 .courseCollectorContainer {
   border: 1px solid blue;
+  border-radius: 10px;
   flex-grow: 1;
+  margin: 0 20px;
+  padding: 0 0 15px 0;
+}
+
+.course {
+  border: 1px solid green;
+  display: inline;
+  margin: 0 auto;
+}
+.courselist {
+  margin-top: 10px;
 }
 
 
