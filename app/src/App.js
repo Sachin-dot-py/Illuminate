@@ -60,7 +60,6 @@ function App() {
     <div className="App">
       <TimePreferenceSelector timePreference={timePreference} setTimePreference={setTimePreference} />
       <CourseCollector courses={courses} setCourses={setCourses}/>
-      {/* <TimeRange use24Hours={true} startMoment={startMoment} endMoment={endMoment} onChange={handleChange}/> */}
       <UnavailabilityCollector unavailabilities={unavailabilities} setUnavailabilities={setUnavailabilities}/>
       <button onClick={onSendRequest}>Foo</button>
     </div>

@@ -2,6 +2,7 @@ import { useState } from "react"
 import TimeRange from "react-time-range"
 import { DEFAULT_TIMESTAMP } from "../utils"
 import { DAYS } from "../utils"
+import { Unavailability } from "./Unavailability"
 
 export const UnavailabilityCollector = ({unavailabilities, setUnavailabilities}) => {
     
@@ -38,8 +39,21 @@ export const UnavailabilityCollector = ({unavailabilities, setUnavailabilities})
         <button onClick={() => addUnavailabilityToDay(currentDay)}> Add 2Unavailability </button>
 
         {unavailabilities[currentDay].map(([startTime, endTime], idx) => {
-            console.log("Rendering timerange with", startTime, endTime, "on day", currentDay, "in index", idx)
-            return <TimeRange use24Hours={true} startMoment={startTime} endMoment={endTime} onChange = {({startTime, endTime}) => {console.log(startTime, endTime); editTimeRange(currentDay, startTime, endTime, idx)}}/>
+            // console.log("Rendering timerange with", startTime, endTime, "on day", currentDay, "in index", idx)
+            const onChange = ({startTime, endTime}) => {editTimeRange(currentDay, startTime, endTime, idx)}
+
+            const deleteUnavailability = () => {
+                setUnavailabilities((oldUnavailabilities) => {
+                    let newUnavailabilities = {...oldUnavailabilities}
+
+                    newUnavailabilities[currentDay] = newUnavailabilities[currentDay].filter((_, currIdx) => currIdx !== idx)
+
+                    return newUnavailabilities
+                })
+            }
+
+            // return <TimeRange use24Hours={true} startMoment={startTime} endMoment={endTime} onChange = {onChange}/>
+            return <Unavailability startTime={startTime} endTime={endTime} onChange={onChange} onDelete={deleteUnavailability} />
         })}
     </div>
 }
