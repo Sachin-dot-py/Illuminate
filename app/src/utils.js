@@ -124,9 +124,9 @@ let classColorMapping = {};
 export const parseScheduleUnit = (isoDay, scheduleUnit) => {
 
     const [startTime, endTime] = getClassEventStartAndEnd(isoDay, scheduleUnit)
-    const {code, location, section, type, professor} = scheduleUnit
+    const {code, location, section, type, professor, walkingTime, percentClass, studyHours, percentProf} = scheduleUnit
 
-    const title = `${code}\n${professor}\n ${type} | ${section}\n${location}`
+    const title = `${code}\n${professor}\n ${type} | ${section}\n ${location}\n${walkingTime ?? "N/A"}🚶`
 
     const colors = ["#bde0fe", "#ffc8dd", "#a2d2ff", "#ffafcc", "#cdb4db", "#e9edc9"];
 
@@ -148,6 +148,15 @@ export const parseScheduleUnit = (isoDay, scheduleUnit) => {
         start: startTime,
         end: endTime,
         color: colors[color_id],
+        code,
+        professor,
+        type,
+        section,
+        location,
+        walkingTime,
+        percentClass,
+        studyHours,
+        percentProf
     }
 }
 
