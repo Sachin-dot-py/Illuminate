@@ -1,0 +1,2 @@
+MAP_ID = "1005"
+CUR_QUARTER = "SP24"
