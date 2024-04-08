@@ -29,6 +29,12 @@ Everyone has experienced bad professors, so we'll display previous CAPE data on 
 
 Most of our time was spent on attempting to authenticate into the WebReg API, coding an agent to request and scrape course data from the Schedule of Classes HTML page, and reverse-engineering the maps.ucsd.edu page to get data on class locations and walking routes between them. Furthermore, we had to eliminate inefficiencies and determine the approach with the lowest time complexity, in order to make the app viable.
 
+### Pre-Setup: Environment Variables!
+
+You'll find in ``` app/api ``` a file ```constants.py``` with a empty API key. This is where you need your api key for the UCSD maps API! 
+
+Head on over to [UCSD's map website](https://maps.ucsd.edu/map/default.htm) and open up the devtools. Pretty much any action you do on the website sidebar will make a request to their APIs where you'll see a ```key``` in the Query String payload. Copy that and you have your API key to set in ```constants.py```. Don't forget to add this file now to your .gitignore!
+
 ## Setup
 
 1. Install [Python 3.10+](https://www.python.org/downloads/) and [Node.js](https://nodejs.org/en/download).
