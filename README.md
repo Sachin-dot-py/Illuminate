@@ -9,6 +9,10 @@ we'll take it into account. Have any times you're unavailable due to work or oth
 
 Furthermore, select any professors to avoid (*yikes*), get easy access to their CAPE data, and you'll also be shown how long it takes to walk between your consecutive classes, so you can avoid having to walk from Podemos to Warren Lecture Hall in 10 minutes.
 
+This web app was built for the **UCSD DiamondHacks 2024**, and won the **Honorable Mention Award**!
+
+[View the Demo Video here](https://www.youtube.com/watch?v=dDneyMvmDPc)
+
 ## Inspiration and What it Does
 
 Any student at UCSD would relate to the quarterly ritual of planning your classes on WebReg. With its clunky UI, its unintuitive interface, and its limited functions, it's difficult to plan your classes effectively. To top it off, it stops working at night for *"processing"* (c'mon, it's 2024). 
